@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { gameData } from '../scenes';
+import { gameData } from '../gameData';
 import { items } from '../data/items';
 import { getInitialPlayerState } from '../constants';
 import type { Choice, UpdateFunctions, Item, Scene, PlayerState, GameState } from '../types';
