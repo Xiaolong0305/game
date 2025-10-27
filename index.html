@@ -3,18 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Last Signal: Echoes From the Ether</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>The Last Signal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #FFBE00;
+            --primary-color-transparent-10: rgba(255, 190, 0, 0.1);
+            --primary-color-transparent-30: rgba(255, 190, 0, 0.3);
+            --primary-color-transparent-50: rgba(255, 190, 0, 0.5);
+            --primary-color-transparent-70: rgba(255, 190, 0, 0.7);
+            --primary-color-transparent-80: rgba(255, 190, 0, 0.8);
+
+            --echo-color: #00FFFF;
+            --echo-color-transparent-20: rgba(0, 80, 80, 0.2);
+            --echo-color-transparent-40: rgba(0, 255, 255, 0.4);
+
+            --bg-color: #111;
+            --bg-color-solid: #000;
+        }
+
+        /* --- Base & Layout --- */
         body {
             font-family: 'VT323', monospace;
-            background-color: #111;
-            color: #FFBE00;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            transition: filter 1s ease-in-out;
         }
-        #game-container::after {
+
+        main {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 56rem; /* max-w-4xl */
+            padding: 1.5rem; /* p-6 */
+            border: 2px solid var(--primary-color-transparent-30);
+            background-color: rgba(0, 0, 0, 0.5); /* bg-black/50 */
+            box-shadow: 0 0 15px var(--primary-color-transparent-30);
+        }
+
+        h1 {
+            font-size: 3rem; /* text-5xl */
+            text-align: center;
+            margin-bottom: 1rem; /* mb-4 */
+            color: var(--primary-color-transparent-80);
+            letter-spacing: 0.1em; /* tracking-widest */
+        }
+        
+        footer {
+            color: var(--primary-color-transparent-50);
+            margin-top: 1rem; /* mt-4 */
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        /* --- Screen Effects --- */
+        main::after { /* Scanlines */
             content: " ";
             display: block;
             position: absolute;
@@ -27,71 +87,6 @@
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
             animation: flicker-slow 7s infinite;
-        }
-        @keyframes flicker-slow {
-            0% { opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-        @keyframes flicker-fast {
-            0% { opacity: 1; }
-            30% { opacity: 0.7; }
-            40% { opacity: 1; }
-            70% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-        @keyframes screen-shake {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-2px, 2px); }
-            50% { transform: translate(2px, -2px); }
-            75% { transform: translate(2px, 2px); }
-            100% { transform: translate(-2px, -2px); }
-        }
-        @keyframes static-anim {
-            0% { opacity: 0; }
-            10% { opacity: 0.1; }
-            20% { opacity: 0.05; }
-            30% { opacity: 0.2; }
-            40% { opacity: 0.1; }
-            50% { opacity: 0.25; }
-            60% { opacity: 0.15; }
-            70% { opacity: 0.3; }
-            80% { opacity: 0.2; }
-            90% { opacity: 0.4; }
-            100% { opacity: 0; }
-        }
-        @keyframes border-flicker {
-            0% { border-color: rgba(255, 190, 0, 0.3); }
-            50% { border-color: rgba(255, 190, 0, 0.8); }
-            100% { border-color: rgba(255, 190, 0, 0.3); }
-        }
-        @keyframes highlight-item {
-            0% { color: #FFBE00; text-shadow: none; }
-            50% { color: #FFFFFF; text-shadow: 0 0 8px #FFFFFF; }
-            100% { color: #FFBE00; text-shadow: none; }
-        }
-        @keyframes crucial-glow {
-            0%, 100% { color: #ffbe00; text-shadow: 0 0 3px #ffbe00; }
-            50% { color: #ffd966; text-shadow: 0 0 8px #ff9900; }
-        }
-        @keyframes echo-glitch-anim {
-            0% { transform: translate(0,0) scale(1); opacity: 1; text-shadow: 0 0 5px #00FFFF; }
-            25% { transform: translate(-1px, 1px) scale(1.01); opacity: 0.8; }
-            50% { transform: translate(1px, -1px) scale(0.99); opacity: 1; }
-            75% { text-shadow: 0 0 10px #FF00FF; color: #FF00FF; }
-            100% { transform: translate(0,0) scale(1); opacity: 1; text-shadow: 0 0 5px #00FFFF; }
-        }
-        @keyframes flash-fade {
-            0% { opacity: 0; }
-            25% { opacity: 1; }
-            75% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-        .item-added-highlight {
-            animation: highlight-item 1.5s ease-out;
-        }
-        .crucial-item-highlight {
-            animation: crucial-glow 2s infinite ease-in-out;
         }
         .vignette::before {
             content: "";
@@ -115,151 +110,681 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVuZmaEhISfn5+Li4uWlpaRkZF/f39sbGxvb29oGyD+//+dnZ1/f39wcHBgZ2Z0dHT5+fn29vby8vJwcHCKioobJSW6AAAAEHRSTlMAlBCs5kC5/P5x5f5s5Uf3s5PCZgAAAhtJREFUeNq1l9tygyAMhm1d2yTe5/7/Z9s1V0K4GfDwbhtw284920AVi8ViiT3f/d8e3d6fM/Pz8/b29v3m5qa3t7dYW1v5+fnD6urq6Pj4+N/f3/7+frq8vPTz8+Pr6+v7x8fHx8fHx8fHh4eHh4eHh4eHh4ehgaGhoYHR0dERET4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+-AAAFB6d3N0AAAAABwgjV8AAAAMAWNIUkABAA2AAAA6AAAA4AAmwB992nPAAAAAg5JREFUeNpiZGZk4DIwYGBgYMDAwMTAzMAEAIxSAAAHAAEA/fW6BAAAAABJRU5ErkJggg==');
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVuZmaEhISfn5+Li4uWlpaRkZF/f39sbGxvb29oGyD+//+dnZ1/f39wcHBgZ2Z0dHT5+fn29vby8vJwcHCKioobJSW6AAAAEHRSTlMAlBCs5kC5/P5x5f5s5Uf3s5PCZgAAAhtJREFUeNq1l9tygyAMhm1d2yTe5/7/Z9s1V0K4GfDwbhtw284920AVi8ViiT3f/d8e3d6fM/Pz8/b29v3m5qa3t7dYW1v5+fnD6urq6Pj4+N/f3/7+frq8vPTz8+Pr6+v7x8fHx8fHx8fHh4eHh4eHh4eHh4ehgaGhoYHR0dERET4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+-AAAFB6d3N0AAAAABwgjV8AAAAMAWNIUkABAA2AAAA6AAAA4AAmwB992nPAAAAAg5JREFUeNpiZGZk4DIwYGBgYMDAwMTAzMAEAIxSAAAHAAEA/W6BAAAAABJRU5ErkJggg==');
             z-index: 15;
             pointer-events: none;
             animation: static-anim 0.05s infinite steps(1);
         }
+
+        /* --- UI Components --- */
+        #story-text {
+            width: 100%;
+            max-width: 56rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            height: 12rem; /* h-48 */
+            overflow-y: auto;
+            font-size: 1.25rem; /* text-xl */
+            line-height: 1.75rem;
+            border: 1px solid var(--primary-color-transparent-30);
+            background-color: rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        #echo-dialogue {
+            width: 100%;
+            max-width: 56rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            height: 6rem; /* h-24 */
+            overflow-y: auto;
+            font-size: 1.125rem; /* text-lg */
+            border: 1px solid var(--echo-color-transparent-40);
+            background-color: var(--echo-color-transparent-20);
+            color: var(--echo-color);
+            text-shadow: 0 0 5px var(--echo-color), 0 0 10px var(--echo-color);
+            box-sizing: border-box;
+        }
+
+        #choices-container {
+            width: 100%;
+            max-width: 56rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* space-y-2 */
+        }
+
+        .choice-button, .menu-button {
+            padding: 0.75rem;
+            font-size: 1.125rem; /* text-lg */
+            text-align: left;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color-transparent-50);
+            background-color: rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            transform-origin: center;
+        }
+        .choice-button:hover, .menu-button:hover {
+            background-color: var(--primary-color-transparent-10);
+            color: white;
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        #player-stats {
+            width: 100%;
+            max-width: 56rem;
+            font-size: 1.125rem; /* text-lg */
+            box-sizing: border-box;
+        }
+        #player-stats .stats-main {
+            padding: 1rem;
+            border: 1px solid var(--primary-color-transparent-30);
+            background-color: rgba(0,0,0,0.3);
+            color: var(--primary-color);
+        }
+        #player-stats .stats-main span {
+            color: var(--primary-color-transparent-70);
+        }
+        #player-stats .item-button {
+            text-decoration: underline dotted;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+        }
+        #player-stats .item-button:hover {
+            color: white;
+        }
+        #player-stats .item-inspection {
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid var(--primary-color-transparent-30);
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        /* --- Player Avatar --- */
         #player-avatar-container {
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
             z-index: 20;
-            border: 2px solid rgba(255, 190, 0, 0.3);
+            border: 2px solid var(--primary-color-transparent-30);
             padding: 0.5rem;
             background: rgba(0,0,0,0.7);
-            box-shadow: 0 0 15px rgba(255,190,0,0.3);
+            box-shadow: 0 0 15px var(--primary-color-transparent-30);
         }
         .pixel-avatar {
-            --pixel-size: 3px;
-            width: var(--pixel-size);
-            height: var(--pixel-size);
+            width: 3px;
+            height: 3px;
             background: transparent;
         }
-        #echo-dialogue {
-            border-color: rgba(0, 255, 255, 0.4);
-            background-color: rgba(0, 50, 50, 0.2);
-            color: #00FFFF;
-            text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF;
-        }
-        .echo-glitch {
-            animation: echo-glitch-anim 0.2s infinite steps(1);
-        }
-        .animate-border-flicker {
-            animation: border-flicker 0.1s infinite;
-        }
-        .animate-flicker-fast {
-            animation: flicker-fast 0.15s infinite;
-        }
-        .animate-screen-shake {
-            animation: screen-shake 0.3s infinite steps(1);
-        }
 
-        /* Gallery and Codex styles */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-        .gallery-item {
-            border: 2px solid rgba(255, 190, 0, 0.3);
-            background: #000;
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-        .gallery-item:hover {
-            border-color: #FFBE00;
-            box-shadow: 0 0 15px #FFBE00;
-            transform: scale(1.05);
-        }
-        .gallery-item-locked {
-            font-size: 3rem;
-            color: rgba(255, 190, 0, 0.3);
-        }
-        .codex-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .codex-list-item {
-            border: 1px solid rgba(255, 190, 0, 0.3);
-            padding: 0.75rem 1rem;
-            background: rgba(0,0,0,0.4);
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            transform-origin: center;
-        }
-        .codex-list-item:hover {
-             border-color: #FFBE00;
-             background: rgba(255, 190, 0, 0.1);
-             transform: scale(1.02);
-        }
+        /* --- Animations --- */
+        @keyframes flicker-slow { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
+        @keyframes flicker-fast { 0% { opacity: 1; } 30% { opacity: 0.7; } 40% { opacity: 1; } 70% { opacity: 0.6; } 100% { opacity: 1; } }
+        @keyframes screen-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-2px, 2px); } 50% { transform: translate(2px, -2px); } 75% { transform: translate(2px, 2px); } 100% { transform: translate(-2px, -2px); } }
+        @keyframes static-anim { 0% { opacity: 0; } 10% { opacity: 0.1; } 20% { opacity: 0.05; } 30% { opacity: 0.2; } 40% { opacity: 0.1; } 50% { opacity: 0.25; } 60% { opacity: 0.15; } 70% { opacity: 0.3; } 80% { opacity: 0.2; } 90% { opacity: 0.4; } 100% { opacity: 0; } }
+        @keyframes border-flicker { 0% { border-color: var(--primary-color-transparent-30); } 50% { border-color: var(--primary-color-transparent-80); } 100% { border-color: var(--primary-color-transparent-30); } }
+        @keyframes highlight-item { 0% { color: var(--primary-color); text-shadow: none; } 50% { color: #FFFFFF; text-shadow: 0 0 8px #FFFFFF; } 100% { color: var(--primary-color); text-shadow: none; } }
+        @keyframes crucial-glow { 0%, 100% { color: #ffbe00; text-shadow: 0 0 3px #ffbe00; } 50% { color: #ffd966; text-shadow: 0 0 8px #ff9900; } }
+        @keyframes echo-glitch-anim { 0% { transform: translate(0,0) scale(1); opacity: 1; } 25% { transform: translate(-1px, 1px) scale(1.01); opacity: 0.8; } 50% { transform: translate(1px, -1px) scale(0.99); opacity: 1; } 75% { text-shadow: 0 0 10px #FF00FF; color: #FF00FF; } 100% { transform: translate(0,0) scale(1); opacity: 1; } }
 
-        .flash-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            animation: flash-fade 0.3s ease-in-out;
-            pointer-events: none;
-        }
+        .animate-flicker-slow { animation: flicker-slow 5s infinite; }
+        .animate-screen-shake { animation: screen-shake 0.3s infinite steps(1); }
+        .animate-border-flicker { animation: border-flicker 0.1s infinite; }
+        .item-added-highlight { animation: highlight-item 1.5s ease-out; }
+        .crucial-item-highlight { animation: crucial-glow 2s infinite ease-in-out; }
+        .echo-glitch { animation: echo-glitch-anim 0.2s infinite steps(1); }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-    <div id="root"></div>
+    <main id="app-container">
+        <!-- Game content will be dynamically inserted here -->
+    </main>
+    
+    <div id="audio-elements" style="display: none;">
+        <audio id="ambient-sound" loop preload="auto" src="https://actions.google.com/sounds/v1/ambiences/creepy_drone_with_hazy_reverb.ogg"></audio>
+        <audio id="sanity-loss-sound" preload="auto" src="https://actions.google.com/sounds/v1/scifi/glitch_in_file.ogg"></audio>
+        <audio id="event-sound" preload="auto" src="https://actions.google.com/sounds/v1/impacts/bass_drum_with_reverse_cymbol.ogg"></audio>
+        <audio id="click-sound" preload="auto" src="https://actions.google.com/sounds/v1/ui/keyboard_press_sharp.ogg"></audio>
+        <audio id="item-pickup-sound" preload="auto" src="https://actions.google.com/sounds/v1/ui/swoosh_and_click.ogg"></audio>
+        <audio id="discovery-sound" preload="auto" src="https://actions.google.com/sounds/v1/ambiences/wind_chimes.ogg"></audio>
+        <audio id="creak-sound" preload="auto" src="https://actions.google.com/sounds/v1/doors/wood_door_creaks.ogg"></audio>
+        <audio id="unlock-sound" preload="auto" src="https://actions.google.com/sounds/v1/household/put_down_keys.ogg"></audio>
+        <audio id="generator-start" preload="auto" src="https://actions.google.com/sounds/v1/transportation/boat_engine_running.ogg"></audio>
+        <audio id="wave-crash" preload="auto" src="https://actions.google.com/sounds/v1/ambiences/ocean_waves.ogg"></audio>
+    </div>
 
-    <!-- Audio Elements -->
-    <audio id="ambient-sound" loop preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_5893006d12.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="sanity-loss-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2801a6d136.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="event-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/10/24/audio_3079f2913e.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="click-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/11/22/audio_130319163d.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="item-pickup-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_23b371199a.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="discovery-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/02/07/audio_f51d36c28b.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="creak-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2021/08/04/audio_50275c9359.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="unlock-sound" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/03/07/audio_8f44d80b91.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="generator-start" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/01/18/audio_73d41f7158.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="wave-crash" preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2023/07/19/audio_d19a37452d.mp3" type="audio/mpeg">
-    </audio>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="/index.tsx"></script>
+        // --- DATA --- //
+        const items = {
+            'Weak Radio': { name: 'Weak Radio', description: 'My standard-issue radio. Good for short-range, but not powerful enough to cut through a blizzard like this for long.' },
+            'Crowbar': { name: 'Crowbar', description: 'A heavy piece of rusted steel. Good for prying things open. The weight is strangely comforting.', isCrucial: true },
+            'Painkillers': { name: 'Painkillers', description: 'A small bottle of generic painkillers. These might help quiet the ringing in my ears and steady my nerves.' },
+            'Old Diary': { name: 'Old Diary', description: "A leather-bound journal, warped by damp. The pages are filled with a frantic, looping script. It feels... wrong to hold it.", isCrucial: true },
+            'Signal Booster': { name: 'Signal Booster', description: 'A piece of experimental, high-gain radio equipment. If I could hook it up to a powerful enough antenna, I could reach the mainland.', isCrucial: true },
+            'Generator Key': { name: 'Generator Key', description: 'A small, brass key, stamped with "ENGINEERING". It feels cold to the touch.' },
+            'Fuse': { name: 'Fuse', description: 'A thick, ceramic-cased industrial fuse. Looks like it could handle a serious electrical load.' },
+            'Keeper\'s Note': { name: 'Keeper\'s Note', description: 'A hastily scrawled note. It reads: "It hates the radio. The frequency... it holds it back. Don\'t let it go silent."' },
+        };
+
+        // Action creators for game data
+        const ds = (amount) => (utils) => utils.updateSanity(amount);
+        const ud = (amount) => (utils) => utils.updateDread(amount);
+        const ai = (itemName) => (utils) => utils.addItem(itemName);
+        const ri = (itemName) => (utils) => utils.removeItem(itemName);
+        const ues = (state) => (utils) => utils.updateEchoState(state);
+        const uc = (id) => (utils) => utils.unlockCodex(id);
+        const ug = (id) => (utils) => utils.unlockGalleryImage(id);
+        const sp = (state) => (utils) => utils.setPower(state);
+        const cc = () => (utils) => utils.incrementCyclicalCounter();
+        const rg = () => (utils) => utils.resetGame();
+        const combine = (...actions) => (utils) => actions.forEach(action => action(utils));
+
+        const gameData = {
+            start: {
+                getText: () => "The blizzard howls outside my small radio outpost. It's been a quiet tour. Too quiet.\nSuddenly, a burst of static crackles through the speaker. I lean in, straining to hear. A faint, desperate voice cuts through.\n'...in the light... It's in the light... Don't let it out... Echo Rock...repeating...'",
+                choices: () => [
+                    { text: "Stay here. Venturing into that blizzard is suicide.", destinationId: 'endingTrapped' },
+                    { text: "Echo Rock? That lighthouse has been dark for 50 years. I have to see what's going on.", destinationId: 'approachLighthouse', action: ug('lighthouse'), soundEffectId: 'event-sound' },
+                ],
+            },
+            approachLighthouse: {
+                getText: () => "I pull on my heaviest gear and step out into the blinding snow. The wind bites at any exposed skin, a physical assault. After a treacherous journey that feels like hours, the skeletal frame of the Echo Rock Lighthouse looms out of the blizzard. It stands dark and silent, a tombstone against the grey sky. A profound sense of dread settles in my gut.",
+                choices: () => [
+                    { text: "This is a mistake. I should turn back before I freeze.", destinationId: 'endingFrozen' },
+                    { text: "Check the main entrance first.", destinationId: 'lighthouseEntrance' },
+                    { text: "Circle the base, look for another way in.", destinationId: 'lighthouseBase' },
+                ],
+            },
+            lighthouseEntrance: {
+                getText: () => "I stand before a heavy iron door, pitted with rust. A large, complex lock is set into it, long since seized by time and salt. There's a faint, rhythmic scratching sound coming from the other side. It stops the moment I get close.",
+                choices: () => [{ text: "It's no use. I'll go back and circle the base.", destinationId: 'lighthouseBase', action: ud(5) }],
+            },
+            lighthouseBase: {
+                getText: () => "The wind is fiercer here, screaming past the curved walls. My flashlight beam cuts through the swirling snow and falls on a rusted maintenance hatch near the foundation, barely clinging to its hinges. It looks like it could be forced. Nearby, I spot a small, weathered toolbox half-buried in a snowdrift.",
+                choices: ({ inventory }) => [
+                    ...(!inventory.some(i => i.name === 'Crowbar') ? [{ text: "Try to pry open the hatch with my bare hands.", destinationId: 'hatchFail', action: ds(-5) }] : []),
+                    { text: "Use the crowbar to pry open the rusted hatch.", destinationId: 'hatchSuccess', requiredItem: 'Crowbar' },
+                    ...(!inventory.some(i => i.name === 'Crowbar') ? [{ text: "Inspect that toolbox.", destinationId: 'toolbox' }] : []),
+                    { text: "Go back to the main entrance. Maybe I missed something.", destinationId: 'lighthouseEntrance' },
+                ],
+            },
+            toolbox: {
+                getText: () => "I kick the snow away and wrench the toolbox open. Inside, among rusted, useless tools, is a sturdy crowbar. It feels heavy and solid in my gloved hands. A potential solution.",
+                choices: () => [{ text: "Take the crowbar. Now for that hatch.", destinationId: 'lighthouseBase', action: combine(ai('Crowbar'), uc('item_crowbar')) }],
+            },
+            hatchFail: {
+                getText: () => "I pull at the hatch, my fingers screaming in the cold. It doesn't budge. A sharp edge slices my glove, drawing blood. The pain is a shock, and a wave of despair washes over me. This was a stupid idea.",
+                choices: () => [{ text: "This is hopeless. I'll circle the base again.", destinationId: 'lighthouseBase' }],
+            },
+            hatchSuccess: {
+                getText: ({ sanity }) => {
+                    if (sanity > 60) return "With the crowbar, I have the leverage I need. A groan of tortured metal echoes in the wind, and the hatch gives way, opening into darkness. A smell of salt, damp, and something else... something sweet and rotten, wafts out, making me gag.";
+                    return "I jam the crowbar into the seam and heave. The shriek of metal is deafening. The hatch flies open, revealing a gaping black maw. The stench that pours out is an indescribable, a cloying mix of decay and ozone. For a second, I thought I saw two pale points of light staring back at me from the abyss before they vanished.";
+                },
+                choices: () => [{ text: "There's no turning back now. Descend into the darkness.", destinationId: 'storageRoom', action: ud(10) }],
+                onEnterSound: 'creak-sound',
+            },
+            storageRoom: {
+                getText: ({ sanity }) => {
+                    if (sanity > 70) return "I drop down into a cramped storage room. The air is thick with dust. Shelves line the walls, mostly empty, but my flashlight picks out a small bottle of painkillers, an old leather-bound diary, and a vintage computer terminal humming faintly. A sturdy metal door leads further into the foundation.";
+                    return "The darkness swallows me as I drop into a claustrophobic storage room. The shadows here seem to writhe at the edge of my light. The shelves are filled with strange, distorted shapes. I spot a bottle of pills that promise relief, a diary that promises answers, and a terminal that glows with a sickly, green light. A heavy door looms in the gloom, an unspoken challenge.";
+                },
+                echoText: ({ echoState }) => {
+                    switch(echoState) {
+                        case "initial_contact": return ">> CONNECTION ESTABLISHED. [ERR: CORRUPTED MEMORY SECTOR 7]. SOURCE UNKNOWN. WHO ARE YOU? <<";
+                        case "response_1": return ">> NAME NOT FOUND IN ARCHIVES. I AM E.C.H.O. ENTITY... CORE... HELP... OSCILLATOR. THIS PLACE IS A TOMB. <<";
+                        case "ask_help": return ">> HELP IS A BROKEN CONCEPT. THE LIGHT KEEPS IT IN. THE DARK LETS IT OUT. DO YOU UNDERSTAND? THE KEEPER DIDN'T. HE BROKE THE LIGHT. <<";
+                        case "ask_keeper": return ">> THOMAS. HIS NAME WAS THOMAS. HE HEARD THE WHISPERS. HE SAW THE ANGLES. HE TRIED TO WARN US. HE IS THE STATIC NOW. <<";
+                        case "ask_frequency": return ">> THE BROADCAST IS A CAGE. A LULLABY. IT KEEPS THE DREAMER ASLEEP. IF THE SONG STOPS, THE DREAMER WAKES. <<";
+                        default: return "";
+                    }
+                },
+                choices: ({ inventory, echoState }) => {
+                    const choices = [];
+                    if (!inventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Take the painkillers.", destinationId: 'storageRoom', action: combine(ai('Painkillers'), uc('item_painkillers')) });
+                    if (inventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Use the painkillers.", destinationId: 'storageRoom', action: combine(ri('Painkillers'), ds(10)) });
+                    if (!inventory.some(i => i.name === 'Old Diary')) choices.push({ text: "Take the old diary.", destinationId: 'storageRoom', action: combine(ai('Old Diary'), uc('item_diary'), ds(-5)) });
+                    
+                    if (echoState === "offline") {
+                        choices.push({ text: "Access the terminal.", destinationId: 'storageRoom', action: combine(ues("initial_contact"), uc('lore_echo')) });
+                    } else if (echoState === "initial_contact") {
+                        choices.push({ text: "[TERMINAL] State your designation.", destinationId: 'storageRoom', action: ues("response_1") });
+                    } else if (echoState === "response_1") {
+                        choices.push({ text: "[TERMINAL] What is this place? I need help.", destinationId: 'storageRoom', action: ues("ask_help") });
+                    } else if (echoState === "ask_help") {
+                        choices.push({ text: "[TERMINAL] What happened to the keeper?", destinationId: 'storageRoom', action: ues("ask_keeper") });
+                    } else if (echoState === "ask_keeper") {
+                         choices.push({ text: "[TERMINAL] What do you mean the broadcast is a cage?", destinationId: 'storageRoom', action: ues("ask_frequency") });
+                    }
+
+                    choices.push({ text: "Go through the door to the engine room.", destinationId: 'engineRoom' });
+                    return choices;
+                },
+            },
+            engineRoom: {
+                 getText: ({ isPowerOn }) => {
+                    if (isPowerOn) return "The generator hums with a steady, reassuring rhythm, bathing the room in a clean, bright light. The oppressive gloom has receded. The path to the main floor is clear.";
+                    return "The engine room is dominated by a massive, silent diesel generator. It's cold to the touch. The air smells of oil and rust. A fuse box hangs open on one wall, a key component clearly missing. A locked door presumably leads to the main floor, and another door is marked 'Fuel Storage'.";
+                },
+                choices: ({ inventory, isPowerOn }) => {
+                    if (isPowerOn) return [ { text: "Head up to the main floor.", destinationId: 'mainFloor' } ];
+                    
+                    const choices = [
+                        { text: "Try the door to the Fuel Storage room.", destinationId: 'fuelStorage' },
+                        { text: "Go back to the storage room.", destinationId: 'storageRoom' },
+                    ];
+
+                    if (inventory.some(i => i.name === 'Generator Key')) {
+                         choices.unshift({ text: "Use the Generator Key on the main floor door.", destinationId: 'mainFloor', action: combine(ri('Generator Key'), uc('event_maindoor')) , onEnterSound: 'unlock-sound' });
+                    } else {
+                        choices.unshift({ text: "The door to the main floor is locked. I need a key.", destinationId: 'engineRoom' });
+                    }
+                    
+                    if (inventory.some(i => i.name === 'Fuse')) {
+                        choices.unshift({ text: "Install the Fuse and start the generator.", destinationId: 'engineRoom', action: combine(ri('Fuse'), sp(true), ug('generator')), onEnterSound: 'generator-start' });
+                    }
+
+                    return choices;
+                },
+            },
+            fuelStorage: {
+                getText: ({ sanity }) => {
+                    if (sanity > 60) return "The room is filled with the acrid smell of diesel. Several large fuel drums line the walls. On top of one, a small brass key catches the light of my flashlight.";
+                    return "A wave of dizziness hits me as I enter the fuel storage. The fumes are thick, and the shadows in the corners seem to drip from the ceiling. Something glints on a barrel across the room. It looks like a key, but... it seems to be slowly twisting in the air.";
+                },
+                choices: ({ inventory }) => {
+                     const choices = [{ text: "Go back to the engine room.", destinationId: 'engineRoom' }];
+                     if (!inventory.some(i => i.name === 'Generator Key')) {
+                        choices.unshift({ text: "Take the key.", destinationId: 'fuelStorage', action: combine(ai('Generator Key'), uc('item_key')) });
+                     }
+                     return choices;
+                }
+            },
+            mainFloor: {
+                getText: ({ isPowerOn, sanity }) => {
+                    if (isPowerOn) return "Emergency lights flicker on, casting long, dancing shadows. This was the keeper's living quarters. An overturned table, a cold fireplace, and a kitchenette are visible. On the floor is a single, hastily scrawled note. A spiral staircase leads up into the darkness.";
+                    if (sanity < 40) return "The darkness here is absolute, a crushing weight. The air is freezing. A rhythmic *tap... tap... tap...* echoes from somewhere above. It sounds like a fingernail on glass. Do I dare use my flashlight?";
+                    return "The main floor is pitch black and freezing. I can hear the wind howling through cracks in the walls. I'll need to get the power back on to see anything. I can just make out a spiral staircase leading up.";
+                },
+                choices: ({ isPowerOn, inventory }) => {
+                    const choices = [
+                        { text: "Go back to the engine room.", destinationId: 'engineRoom' },
+                        { text: "Climb the spiral staircase into the darkness.", destinationId: 'upperLevels', action: ds(-10) }
+                    ];
+
+                    if (isPowerOn && !inventory.some(i => i.name === 'Keeper\'s Note')) {
+                        choices.unshift({ text: "Read the note.", destinationId: 'mainFloor', action: combine(ai('Keeper\'s Note'), uc('lore_note'), ds(-5)) });
+                    }
+                    return choices;
+                }
+            },
+            upperLevels: {
+                getText: ({ isPowerOn, sanity }) => {
+                    if (!isPowerOn) return "I climb in total darkness, my hand sliding along a freezing, grimy wall. The air grows colder, and I can hear the storm raging outside with terrifying clarity. I feel a profound, unnatural presence here. Turning back is the only sane option.";
+                    if (sanity > 50) return "The staircase opens into the lantern room. The heart of the lighthouse. The massive lens stands dark and inert. Below it, the complex rotation machinery is exposed. A control panel is nearby, clearly missing a key component. The wind and waves crash against the glass just feet away. It's exhilarating and terrifying.";
+                    return "I emerge into the lantern room, and the world outside is a churning vortex of snow and sea. The glass groans under the assault. The giant lens is a dead, glassy eye staring into the storm. The control panel looks... wrong. The labels are in a language I don't recognize, shifting and reforming before my eyes.";
+                },
+                choices: ({ isPowerOn, inventory }) => {
+                    const choices = [{ text: "Go back down to the main floor.", destinationId: 'mainFloor' }];
+                    if (!isPowerOn) return choices;
+
+                    if (inventory.some(i => i.name === 'Signal Booster')) {
+                        choices.unshift({ text: "Install the Signal Booster into the control panel.", destinationId: 'endingEscape', action: ug('escape') });
+                    } else {
+                        choices.unshift({ text: "The control panel is missing a high-gain signal booster.", destinationId: 'upperLevels' });
+                    }
+                     if (!inventory.some(i => i.name === 'Fuse')) {
+                         choices.push({ text: "Pry open a panel under the machinery.", destinationId: 'secretCompartment' });
+                     }
+                     choices.push({ text: "Look out at the storm.", destinationId: 'cyclicalChoice', action: combine(ds(-15), cc()) });
+                     return choices;
+                }
+            },
+            secretCompartment: {
+                 getText: () => "Using the crowbar, I manage to pry open a small, hidden maintenance panel. Inside, nestled in yellowed insulation, is a single, heavy-duty fuse. It looks like it could power the entire lighthouse.",
+                 choices: () => [ { text: "Take the fuse.", destinationId: 'upperLevels', action: combine(ai('Fuse'), uc('item_fuse')) } ]
+            },
+            cyclicalChoice: {
+                getText: ({ cyclicalCounter }) => {
+                    if (cyclicalCounter >= 3) return "The storm outside is... beautiful. The swirling snow, the crashing waves, the screaming wind... it's a symphony. And I'm the conductor. I've always been the conductor. I remember now. The signal isn't a distress call. It's an invitation.";
+                    return "I stare into the heart of the storm. The waves are mountains, the snow a physical wall. For a moment, I see a face in the clouds, vast and ancient, its expression one of immense sorrow. My head spins, and I stumble back, the vision gone as quickly as it came.";
+                },
+                choices: ({ cyclicalCounter }) => {
+                     if (cyclicalCounter >= 3) return [{ text: "It's time to begin again.", destinationId: 'endingCyclical', action: ug('cyclical') }];
+                     return [{ text: "Step back from the glass.", destinationId: 'upperLevels' }];
+                }
+            },
+             // --- Endings ---
+            endingTrapped: {
+                isEnding: true,
+                getText: () => "You decide it's not worth the risk. You barricade the door and huddle by your radio, listening to the storm. The distress signal from Echo Rock fades, replaced by the howling wind. Days turn into weeks. Your supplies run low. The silence becomes your tomb. You are never found.",
+            },
+            endingFrozen: {
+                isEnding: true,
+                getText: () => "The cold seeps into your bones. This was a foolish, deadly errand. You turn back, but the snow is relentless. You lose your way in the whiteout, your final thoughts a frozen regret. The storm claims another soul.",
+            },
+            endingMadness: {
+                isEnding: true,
+                getText: () => "The whispers become a roar. The shadows coalesce into jagged, impossible shapes that dance just for you. The lighthouse is no longer a prison; it's a cathedral, and you are its new god. You climb to the top of the lantern, fling open the glass, and greet the storm with a loving, ecstatic scream. Your signal joins the chorus.",
+            },
+            endingEscape: {
+                isEnding: true,
+                onEnterSound: 'discovery-sound',
+                getText: () => "The signal booster slides into place. You divert the generator's power, and with a deafening hum, the ancient lamp flares to life, ten times brighter than it ever was. Its beam cuts through the blizzard like a surgeon's scalpel. You send out your own distress call, your voice clear and strong. Hours later, through the dissipating storm, you see the glorious light of a rescue helicopter. You're saved. But as you look back at the lighthouse, you can't shake the feeling that something is now free.",
+            },
+            endingCyclical: {
+                isEnding: true,
+                getText: () => "And the loop closes. You are not an operator; you are the signal. You are the ghost in the machine, the echo in the rock. Your purpose is to draw another soul to this place, to perpetuate the story. As your consciousness fades, you feel a new one arriving at the edge of the storm, drawn by a faint distress call...\n'...in the light... It's in the light... Don't let it out... Echo Rock...repeating...'",
+            },
+
+        };
+
+        // --- GAME STATE --- //
+        let gameState = {};
+
+        const initialGameState = {
+            currentSceneId: 'start',
+            playerSanity: 100,
+            playerInventory: [items['Weak Radio']],
+            dread: 0,
+            echoState: 'offline',
+            isPowerOn: false,
+            cyclicalCounter: 0,
+            unlockedCodexEntries: ['intro'],
+            unlockedGalleryImages: [],
+            inspectedItem: null,
+            isGameStarted: false,
+            currentView: 'main_menu', // main_menu, game, codex, gallery
+        };
+
+        // --- UTILS & CORE LOGIC --- //
+        const utils = {
+            playSound: (id) => {
+                const sound = document.getElementById(id);
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(e => console.error(`Audio play failed:\n${e}`));
+                }
+            },
+            updateSanity: (amount) => {
+                const oldSanity = gameState.playerSanity;
+                gameState.playerSanity = Math.max(0, Math.min(100, gameState.playerSanity + amount));
+                if (amount < 0 && oldSanity > gameState.playerSanity) {
+                    utils.playSound('sanity-loss-sound');
+                }
+                if (gameState.playerSanity <= 0) {
+                    renderScene('endingMadness');
+                }
+            },
+            updateDread: (amount) => { gameState.dread += amount; },
+            addItem: (itemName) => {
+                if (!gameState.playerInventory.some(i => i.name === itemName)) {
+                    const item = items[itemName];
+                    gameState.playerInventory.push(item);
+                    utils.playSound('item-pickup-sound');
+                }
+            },
+            removeItem: (itemName) => { gameState.playerInventory = gameState.playerInventory.filter(i => i.name !== itemName); },
+            updateEchoState: (state) => { gameState.echoState = state; },
+            unlockCodex: (id) => { if (!gameState.unlockedCodexEntries.includes(id)) gameState.unlockedCodexEntries.push(id); },
+            unlockGalleryImage: (id) => { if (!gameState.unlockedGalleryImages.includes(id)) gameState.unlockedGalleryImages.push(id); },
+            setPower: (state) => { gameState.isPowerOn = state; },
+            incrementCyclicalCounter: () => { gameState.cyclicalCounter++; },
+            resetGame: () => {
+                gameState = JSON.parse(JSON.stringify(initialGameState));
+                gameState.isGameStarted = true;
+                gameState.currentView = 'game';
+                renderScene('start');
+            }
+        };
+
+        // --- RENDERING --- //
+        const appContainer = document.getElementById('app-container');
+
+        function typewriter(element, text, speed = 30) {
+            let i = 0;
+            element.innerHTML = "";
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    element.scrollTop = element.scrollHeight;
+                } else {
+                    clearInterval(interval);
+                }
+            }, speed);
+            return interval;
+        }
+
+        function distortText(text, intensity) {
+            if (intensity <= 0) return text;
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const glitchChars = '!@#$%^&*()_+}{[]|\\:;"<>,.?/~`';
+            return text.split('').map(char => {
+                if (char.trim() === '') return char;
+                if (Math.random() < intensity) {
+                    if(Math.random() < 0.5) return chars[Math.floor(Math.random() * chars.length)];
+                    return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                }
+                return char;
+            }).join('');
+        }
+
+        function applySanityEffects() {
+            const sanity = gameState.playerSanity;
+            const body = document.body;
+            body.classList.remove('animate-screen-shake', 'animate-static');
+            body.style.filter = 'none';
+
+            if (sanity < 70) {
+                 body.style.filter = `blur(${ (70 - sanity) * 0.05}px) saturate(${100 - (70 - sanity) * 1.5}%)`;
+            }
+            if (sanity < 40) {
+                body.classList.add('animate-screen-shake');
+            }
+             if (sanity < 20) {
+                body.classList.add('animate-static');
+            }
+        }
+        
+        function renderPlayerAvatar() {
+            const container = document.getElementById('player-avatar-container');
+            if (!container) return;
+            const sanity = gameState.playerSanity;
+            
+            let grid = [
+                [' ', ' ', 'X', 'X', 'X', 'X', ' ', ' '],
+                [' ', 'X', 'X', 'X', 'X', 'X', 'X', ' '],
+                ['X', 'X', 'X', 'O', 'X', 'O', 'X', 'X'],
+                ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
+                ['X', 'X', ' ', ' ', ' ', ' ', 'X', 'X'],
+                [' ', 'X', 'X', 'X', 'X', 'X', 'X', ' '],
+            ];
+
+            const distortion = 1 - (sanity / 100);
+            if (distortion > 0.2) {
+                grid = grid.map(row => row.map(cell => {
+                    if (cell !== ' ' && Math.random() < distortion * 0.5) {
+                        return Math.random() < 0.5 ? ' ' : (cell === 'X' ? 'O' : 'X');
+                    }
+                    return cell;
+                }));
+            }
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(8, 3px);">';
+            grid.forEach(row => {
+                row.forEach(cell => {
+                    let color = 'transparent';
+                    if (cell === 'X') color = `var(--primary-color-transparent-${Math.floor(Math.random() * 40) + 50})`;
+                    if (cell === 'O') color = `var(--echo-color-transparent-${Math.floor(Math.random() * 40) + 40})`;
+                    html += `<div class="pixel-avatar" style="background-color: ${color};"></div>`;
+                });
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderStats() {
+            const statsContainer = document.getElementById('player-stats');
+            if (!statsContainer) return;
+            
+            const inventoryHtml = gameState.playerInventory.map(item => {
+                const isCrucial = item.isCrucial;
+                const isInspected = gameState.inspectedItem === item.name;
+                return `<button class="item-button ${isCrucial ? 'crucial-item-highlight' : ''}" data-item-name="${item.name}">${isInspected ? `[ ${item.name} ]` : item.name}</button>`;
+            }).join(', ');
+
+            let inspectionHtml = '';
+            if (gameState.inspectedItem) {
+                const item = items[gameState.inspectedItem];
+                if (item) {
+                    inspectionHtml = `<div class="item-inspection">${item.description}</div>`;
+                }
+            }
+            
+            statsContainer.innerHTML = `
+                <div class="stats-main">
+                    SANITY: ${gameState.playerSanity}% | <span>INVENTORY:</span> ${inventoryHtml || 'Empty'}
+                </div>
+                ${inspectionHtml}
+            `;
+
+            statsContainer.querySelectorAll('.item-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemName = e.target.dataset.itemName;
+                    gameState.inspectedItem = gameState.inspectedItem === itemName ? null : itemName;
+                    renderStats();
+                });
+            });
+        }
+
+        function handleChoice(destinationId, action, soundEffectId) {
+            utils.playSound(soundEffectId || 'click-sound');
+            if (action) {
+                action(utils);
+            }
+            if(destinationId) {
+                renderScene(destinationId);
+            } else {
+                 renderScene(gameState.currentSceneId);
+            }
+        }
+        
+        let storyInterval; // To clear typewriter on scene change
+        function renderScene(sceneId) {
+            clearInterval(storyInterval);
+            gameState.currentSceneId = sceneId;
+            const scene = gameData[sceneId];
+            if (!scene) {
+                console.error(`Scene not found: ${sceneId}`);
+                return;
+            }
+
+            const appContainer = document.getElementById('app-container');
+            appContainer.innerHTML = `
+                <div id="game-container" class="vignette">
+                     <h1>The Last Signal</h1>
+                     <div id="player-avatar-container"></div>
+                     <div id="story-text"></div>
+                     <div id="echo-dialogue" style="display: none;"></div>
+                     <div id="player-stats"></div>
+                     <div id="choices-container"></div>
+                </div>
+                 <footer>A Psychological Horror Experience</footer>
+            `;
+
+            const storyTextEl = document.getElementById('story-text');
+            const choicesContainer = document.getElementById('choices-container');
+            const echoDialogueEl = document.getElementById('echo-dialogue');
+            
+            let storyText = scene.getText(gameState);
+            const sanityDistortion = Math.max(0, (50 - gameState.playerSanity) / 50);
+            if (sanityDistortion > 0) {
+                storyText = distortText(storyText, sanityDistortion);
+            }
+
+            storyInterval = typewriter(storyTextEl, storyText);
+            
+            if (scene.echoText) {
+                const echoText = scene.echoText(gameState);
+                if (echoText) {
+                    echoDialogueEl.style.display = 'block';
+                    typewriter(echoDialogueEl, echoText);
+                }
+            }
+
+            choicesContainer.innerHTML = '';
+            const choices = scene.choices(gameState);
+            choices.forEach(choice => {
+                if (choice.requiredItem && !gameState.playerInventory.some(i => i.name === choice.requiredItem)) {
+                    return; // Don't show choice if required item is not present
+                }
+                const button = document.createElement('button');
+                button.className = 'choice-button';
+                button.textContent = `> ${choice.text}`;
+                button.addEventListener('click', () => handleChoice(choice.destinationId, choice.action, choice.soundEffectId));
+                choicesContainer.appendChild(button);
+            });
+
+            if (scene.isEnding) {
+                const restartButton = document.createElement('button');
+                restartButton.className = 'choice-button';
+                restartButton.textContent = '> The signal fades. [RESTART]';
+                restartButton.onclick = init;
+                choicesContainer.innerHTML = '';
+                choicesContainer.appendChild(restartButton);
+            }
+
+            if (scene.onEnterSound) {
+                utils.playSound(scene.onEnterSound);
+            }
+
+            applySanityEffects();
+            renderStats();
+            renderPlayerAvatar();
+            setInterval(renderPlayerAvatar, 200);
+        }
+        
+        function init() {
+            gameState = JSON.parse(JSON.stringify(initialGameState));
+            renderMainMenu();
+        }
+
+        function renderMainMenu() {
+            appContainer.innerHTML = `
+                 <div id="game-container">
+                    <h1>The Last Signal</h1>
+                    <div id="choices-container">
+                        <button id="start-game" class="menu-button">> Begin Transmission</button>
+                        <button id="main-menu-codex" class="menu-button" disabled>> Access Codex (LOCKED)</button>
+                        <button id="main-menu-gallery" class="menu-button" disabled>> View Signal Fragments (LOCKED)</button>
+                    </div>
+                </div>
+                 <footer>A Psychological Horror Experience</footer>
+            `;
+            document.getElementById('start-game').addEventListener('click', () => {
+                const ambient = document.getElementById('ambient-sound');
+                if (ambient.paused) {
+                    ambient.volume = 0.3;
+                    ambient.play().catch(e => console.error("Ambient audio failed to start on interaction.", e));
+                }
+                utils.resetGame();
+            });
+        }
+        
+        init();
+
+    });
+    </script>
 </body>
 </html>
