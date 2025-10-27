@@ -27,7 +27,7 @@
         /* --- Base & Layout --- */
         body {
             font-family: 'VT323', monospace;
-            background-color: var(--bg-color);
+            background-color: var(--bg-color-solid);
             color: var(--primary-color);
             margin: 0;
             padding: 1rem;
@@ -38,6 +38,7 @@
             min-height: 100vh;
             box-sizing: border-box;
             transition: filter 1s ease-in-out;
+            overflow: hidden; /* Prevent scrollbars from jumpscare */
         }
 
         main {
@@ -74,6 +75,31 @@
         }
 
         /* --- Screen Effects --- */
+        #static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9998;
+            pointer-events: none;
+            display: none;
+            opacity: 0;
+        }
+        #static-overlay::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVuZmaEhISfn5+Li4uWlpaRkZF/f39sbGxvb29oGyD+//+dnZ1/f39wcHBgZ2Z0dHT5+fn29vby8vJwcHCKioobJSW6AAAAEHRSTlMAlBCs5kC5/P5x5f5s5Uf3s5PCZgAAAhtJREFUeNq1l9tygyAMhm1d2yTe5/7/Z9s1V0K4GfDwbhtw284920AVi8ViiT3f/d8e3d6fM/Pz8/b29v3m5qa3t7dYW1v5+fnD6urq6Pj4+N/f3/7+frq8vPTz8+Pr6+v7x8fHx8fHx8fHh4eHh4eHh4eHh4ehgaGhoYHR0dERET4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+-AAAFB6d3N0AAAAABwgjV8AAAAMAWNIUkABAA2AAAA6AAAA4AAmwB992nPAAAAAg5JREFUeNpiZGZk4DIwYGBgYMDAwMTAzMAEAIxSAAAHAAEA/W6BAAAAABJRU5ErkJggg==');
+            z-index: 1;
+            animation: static-anim 0.05s infinite steps(1);
+        }
         main::after { /* Scanlines */
             content: " ";
             display: block;
@@ -100,24 +126,9 @@
             pointer-events: none;
             z-index: 10;
         }
-        .animate-static::before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVuZmaEhISfn5+Li4uWlpaRkZF/f39sbGxvb29oGyD+//+dnZ1/f39wcHBgZ2Z0dHT5+fn29vby8vJwcHCKioobJSW6AAAAEHRSTlMAlBCs5kC5/P5x5f5s5Uf3s5PCZgAAAhtJREFUeNq1l9tygyAMhm1d2yTe5/7/Z9s1V0K4GfDwbhtw284920AVi8ViiT3f/d8e3d6fM/Pz8/b29v3m5qa3t7dYW1v5+fnD6urq6Pj4+N/f3/7+frq8vPTz8+Pr6+v7x8fHx8fHx8fHh4eHh4eHh4eHh4ehgaGhoYHR0dERET4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+-AAAFB6d3N0AAAAABwgjV8AAAAMAWNIUkABAA2AAAA6AAAA4AAmwB992nPAAAAAg5JREFUeNpiZGZk4DIwYGBgYMDAwMTAzMAEAIxSAAAHAAEA/W6BAAAAABJRU5ErkJggg==');
-            z-index: 15;
-            pointer-events: none;
-            animation: static-anim 0.05s infinite steps(1);
-        }
 
         /* --- UI Components --- */
-        #story-text {
+        #story-text, #dread-event-text {
             width: 100%;
             max-width: 56rem;
             padding: 1rem;
@@ -129,6 +140,15 @@
             border: 1px solid var(--primary-color-transparent-30);
             background-color: rgba(0,0,0,0.3);
             box-sizing: border-box;
+            animation: text-flicker-in-glow 4s linear 1s both;
+        }
+
+        #dread-event-text {
+             height: auto;
+             min-height: 2rem;
+             color: var(--primary-color-transparent-80);
+             border-style: dotted;
+             display: none;
         }
 
         #echo-dialogue {
@@ -170,6 +190,12 @@
             color: white;
             border-color: var(--primary-color);
             transform: scale(1.02);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+        .choice-button .caret {
+            display: inline-block;
+            width: 1ch;
+            animation: blinking-caret 1s infinite steps(1);
         }
 
         #player-stats {
@@ -218,26 +244,52 @@
             padding: 0.5rem;
             background: rgba(0,0,0,0.7);
             box-shadow: 0 0 15px var(--primary-color-transparent-30);
+            animation: border-flicker 5s infinite;
         }
         .pixel-avatar {
             width: 3px;
             height: 3px;
             background: transparent;
         }
+        
+        /* --- Jumpscare --- */
+        #jumpscare-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: none;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation: jumpscare-flicker 0.2s steps(2, end) 4;
+        }
+        @keyframes jumpscare-flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
 
         /* --- Animations --- */
         @keyframes flicker-slow { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
-        @keyframes flicker-fast { 0% { opacity: 1; } 30% { opacity: 0.7; } 40% { opacity: 1; } 70% { opacity: 0.6; } 100% { opacity: 1; } }
         @keyframes screen-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-2px, 2px); } 50% { transform: translate(2px, -2px); } 75% { transform: translate(2px, 2px); } 100% { transform: translate(-2px, -2px); } }
         @keyframes static-anim { 0% { opacity: 0; } 10% { opacity: 0.1; } 20% { opacity: 0.05; } 30% { opacity: 0.2; } 40% { opacity: 0.1; } 50% { opacity: 0.25; } 60% { opacity: 0.15; } 70% { opacity: 0.3; } 80% { opacity: 0.2; } 90% { opacity: 0.4; } 100% { opacity: 0; } }
+        @keyframes show-static { 0% { opacity: 0; } 100% { opacity: 0.2; } }
+        @keyframes hide-static { 0% { opacity: 0.2; } 100% { opacity: 0; } }
         @keyframes border-flicker { 0% { border-color: var(--primary-color-transparent-30); } 50% { border-color: var(--primary-color-transparent-80); } 100% { border-color: var(--primary-color-transparent-30); } }
         @keyframes highlight-item { 0% { color: var(--primary-color); text-shadow: none; } 50% { color: #FFFFFF; text-shadow: 0 0 8px #FFFFFF; } 100% { color: var(--primary-color); text-shadow: none; } }
         @keyframes crucial-glow { 0%, 100% { color: #ffbe00; text-shadow: 0 0 3px #ffbe00; } 50% { color: #ffd966; text-shadow: 0 0 8px #ff9900; } }
         @keyframes echo-glitch-anim { 0% { transform: translate(0,0) scale(1); opacity: 1; } 25% { transform: translate(-1px, 1px) scale(1.01); opacity: 0.8; } 50% { transform: translate(1px, -1px) scale(0.99); opacity: 1; } 75% { text-shadow: 0 0 10px #FF00FF; color: #FF00FF; } 100% { transform: translate(0,0) scale(1); opacity: 1; } }
+        @keyframes blinking-caret { 50% { opacity: 0; } }
+        @keyframes text-focus-in { 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
+        @keyframes text-flicker-in-glow { 0% { opacity: 0; } 10% { opacity: 0; text-shadow: none; } 10.1% { opacity: 1; text-shadow: none; } 10.2% { opacity: 0; text-shadow: none; } 20% { opacity: 0; text-shadow: none; } 20.1% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50); } 20.6% { opacity: 0; text-shadow: none; } 30% { opacity: 0; text-shadow: none; } 30.1% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50), 0 0 5px var(--primary-color); } 30.5% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50), 0 0 5px var(--primary-color); } 30.6% { opacity: 0; text-shadow: none; } 45% { opacity: 0; text-shadow: none; } 45.1% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50), 0 0 5px var(--primary-color); } 50% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50), 0 0 5px var(--primary-color); } 55% { opacity: 1; text-shadow: 0 0 30px var(--primary-color-transparent-50), 0 0 5px var(--primary-color); } 55.1% { opacity: 0; text-shadow: none; } 57% { opacity: 0; text-shadow: none; } 57.1% { opacity: 1; text-shadow: 0 0 20px var(--primary-color-transparent-30); } 60% { opacity: 1; text-shadow: 0 0 20px var(--primary-color-transparent-30); } 60.1% { opacity: 0; text-shadow: none; } 65% { opacity: 0; text-shadow: none; } 65.1% { opacity: 1; text-shadow: 0 0 10px var(--primary-color-transparent-30); } 75% { opacity: 1; text-shadow: 0 0 10px var(--primary-color-transparent-30); } 75.1% { opacity: 0; text-shadow: none; } 77% { opacity: 0; text-shadow: none; } 77.1% { opacity: 1; text-shadow: none; } 85% { opacity: 1; text-shadow: none; } 85.1% { opacity: 0; text-shadow: none; } 86% { opacity: 0; text-shadow: none; } 86.1% { opacity: 1; text-shadow: none; } 100% { opacity: 1; } }
 
-        .animate-flicker-slow { animation: flicker-slow 5s infinite; }
+        .title-boot { animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
+        .menu-button-boot { animation: text-flicker-in-glow 2s linear 1s both; }
+
         .animate-screen-shake { animation: screen-shake 0.3s infinite steps(1); }
-        .animate-border-flicker { animation: border-flicker 0.1s infinite; }
         .item-added-highlight { animation: highlight-item 1.5s ease-out; }
         .crucial-item-highlight { animation: crucial-glow 2s infinite ease-in-out; }
         .echo-glitch { animation: echo-glitch-anim 0.2s infinite steps(1); }
@@ -248,17 +300,24 @@
         <!-- Game content will be dynamically inserted here -->
     </main>
     
+    <div id="jumpscare-overlay"></div>
+    <div id="static-overlay"></div>
+
     <div id="audio-elements" style="display: none;">
-        <audio id="ambient-sound" loop preload="auto" src="https://actions.google.com/sounds/v1/ambiences/creepy_drone_with_hazy_reverb.ogg"></audio>
-        <audio id="sanity-loss-sound" preload="auto" src="https://actions.google.com/sounds/v1/scifi/glitch_in_file.ogg"></audio>
-        <audio id="event-sound" preload="auto" src="https://actions.google.com/sounds/v1/impacts/bass_drum_with_reverse_cymbol.ogg"></audio>
-        <audio id="click-sound" preload="auto" src="https://actions.google.com/sounds/v1/ui/keyboard_press_sharp.ogg"></audio>
-        <audio id="item-pickup-sound" preload="auto" src="https://actions.google.com/sounds/v1/ui/swoosh_and_click.ogg"></audio>
-        <audio id="discovery-sound" preload="auto" src="https://actions.google.com/sounds/v1/ambiences/wind_chimes.ogg"></audio>
-        <audio id="creak-sound" preload="auto" src="https://actions.google.com/sounds/v1/doors/wood_door_creaks.ogg"></audio>
-        <audio id="unlock-sound" preload="auto" src="https://actions.google.com/sounds/v1/household/put_down_keys.ogg"></audio>
-        <audio id="generator-start" preload="auto" src="https://actions.google.com/sounds/v1/transportation/boat_engine_running.ogg"></audio>
-        <audio id="wave-crash" preload="auto" src="https://actions.google.com/sounds/v1/ambiences/ocean_waves.ogg"></audio>
+        <!-- Audio sources from Pixabay for stability -->
+        <audio id="ambient-sound" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/10/24/audio_a42d8ce72e.mp3"></audio>
+        <audio id="sanity-loss-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/02/11/audio_a16828a2a8.mp3"></audio>
+        <audio id="event-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/08/27/audio_39c94c3453.mp3"></audio>
+        <audio id="click-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_28099320d7.mp3"></audio>
+        <audio id="item-pickup-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/04/18/audio_7849e81b6c.mp3"></audio>
+        <audio id="discovery-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/01/21/audio_39e55a153f.mp3"></audio>
+        <audio id="creak-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2024/04/23/audio_creakingdoordry-1-200922.mp3"></audio>
+        <audio id="unlock-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3612489953.mp3"></audio>
+        <audio id="generator-start" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/04/10/audio_f52313366c.mp3"></audio>
+        <audio id="wave-crash" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/01/24/audio_b363380088.mp3"></audio>
+        <audio id="jumpscare-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/10/20/audio_b2828b8bf5.mp3"></audio>
+        <audio id="echo-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/04/09/audio_959eea9089.mp3"></audio>
+        <audio id="static-crackle-sound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_119d854203.mp3"></audio>
     </div>
 
     <script>
@@ -269,11 +328,15 @@
             'Weak Radio': { name: 'Weak Radio', description: 'My standard-issue radio. Good for short-range, but not powerful enough to cut through a blizzard like this for long.' },
             'Crowbar': { name: 'Crowbar', description: 'A heavy piece of rusted steel. Good for prying things open. The weight is strangely comforting.', isCrucial: true },
             'Painkillers': { name: 'Painkillers', description: 'A small bottle of generic painkillers. These might help quiet the ringing in my ears and steady my nerves.' },
-            'Old Diary': { name: 'Old Diary', description: "A leather-bound journal, warped by damp. The pages are filled with a frantic, looping script. It feels... wrong to hold it.", isCrucial: true },
+            'Old Diary': { name: 'Old Diary', description: "A leather-bound journal, warped by damp. The pages are filled with a frantic, looping script. He scribbled numbers in the margin: 4 8 15 16. A frequency? A code? It feels... wrong to hold it.", isCrucial: true },
             'Signal Booster': { name: 'Signal Booster', description: 'A piece of experimental, high-gain radio equipment. If I could hook it up to a powerful enough antenna, I could reach the mainland.', isCrucial: true },
             'Generator Key': { name: 'Generator Key', description: 'A small, brass key, stamped with "ENGINEERING". It feels cold to the touch.' },
             'Fuse': { name: 'Fuse', description: 'A thick, ceramic-cased industrial fuse. Looks like it could handle a serious electrical load.' },
             'Keeper\'s Note': { name: 'Keeper\'s Note', description: 'A hastily scrawled note. It reads: "It hates the radio. The frequency... it holds it back. Don\'t let it go silent."' },
+        };
+        
+        const jumpscareImages = {
+            diary: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAEAAQADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAEFB//EACgQAQEBAQACAgEFAAEFAQAAAAERAgMhMRJBUWEFInGBkaGxwfDR4f/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD54AmQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQDIAGQ-D//2g'
         };
 
         // Action creators for game data
@@ -281,90 +344,100 @@
         const ud = (amount) => (utils) => utils.updateDread(amount);
         const ai = (itemName) => (utils) => utils.addItem(itemName);
         const ri = (itemName) => (utils) => utils.removeItem(itemName);
-        const ues = (state) => (utils) => utils.updateEchoState(state);
+        const ues = (state, value = null) => (utils) => utils.updateEchoState(state, value);
         const uc = (id) => (utils) => utils.unlockCodex(id);
         const ug = (id) => (utils) => utils.unlockGalleryImage(id);
         const sp = (state) => (utils) => utils.setPower(state);
         const cc = () => (utils) => utils.incrementCyclicalCounter();
-        const rg = () => (utils) => utils.resetGame();
+        const j = (type) => (utils) => utils.triggerJumpscare(type);
         const combine = (...actions) => (utils) => actions.forEach(action => action(utils));
 
         const gameData = {
             start: {
-                getText: () => "The blizzard howls outside my small radio outpost. It's been a quiet tour. Too quiet.\nSuddenly, a burst of static crackles through the speaker. I lean in, straining to hear. A faint, desperate voice cuts through.\n'...in the light... It's in the light... Don't let it out... Echo Rock...repeating...'",
+                getText: () => "The blizzard howls, a lonely counterpoint to the hiss of my radio. It's been a quiet tour at this remote arctic outpost. Too quiet. My shift is almost over when a burst of static rips through the speaker. I lean in, turning the dial. A voice, faint and desperate, cuts through the noise.\n'...in the light... It's in the light... Don't let it out... Echo Rock...repeating...'",
                 choices: () => [
-                    { text: "Stay here. Venturing into that blizzard is suicide.", destinationId: 'endingTrapped' },
-                    { text: "Echo Rock? That lighthouse has been dark for 50 years. I have to see what's going on.", destinationId: 'approachLighthouse', action: ug('lighthouse'), soundEffectId: 'event-sound' },
+                    { text: "It's a ghost signal. Going out in this blizzard is suicide.", destinationId: 'endingTrapped' },
+                    { text: "Echo Rock? That lighthouse has been a tomb for 50 years. I have to know.", destinationId: 'approachLighthouse', action: ug('lighthouse'), soundEffectId: 'event-sound' },
                 ],
             },
             approachLighthouse: {
-                getText: () => "I pull on my heaviest gear and step out into the blinding snow. The wind bites at any exposed skin, a physical assault. After a treacherous journey that feels like hours, the skeletal frame of the Echo Rock Lighthouse looms out of the blizzard. It stands dark and silent, a tombstone against the grey sky. A profound sense of dread settles in my gut.",
+                getText: () => "I pull on my heaviest gear, the cold already biting before I'm even out the door. The wind is a physical assault. It feels like hours before the skeletal frame of Echo Rock Lighthouse looms out of the whiteout. It's a tombstone against the grey sky, dark and silent. A deep, primal dread settles in my gut. This place feels wrong.",
                 choices: () => [
-                    { text: "This is a mistake. I should turn back before I freeze.", destinationId: 'endingFrozen' },
-                    { text: "Check the main entrance first.", destinationId: 'lighthouseEntrance' },
-                    { text: "Circle the base, look for another way in.", destinationId: 'lighthouseBase' },
+                    { text: "This is a mistake. Turn back before I freeze.", destinationId: 'endingFrozen' },
+                    { text: "The main entrance looks sealed. I'll check it anyway.", destinationId: 'lighthouseEntrance', action: ud(5) },
+                    { text: "Circle the base. There must be another way in.", destinationId: 'lighthouseBase', action: ud(5) },
                 ],
             },
             lighthouseEntrance: {
-                getText: () => "I stand before a heavy iron door, pitted with rust. A large, complex lock is set into it, long since seized by time and salt. There's a faint, rhythmic scratching sound coming from the other side. It stops the moment I get close.",
-                choices: () => [{ text: "It's no use. I'll go back and circle the base.", destinationId: 'lighthouseBase', action: ud(5) }],
+                getText: () => "The heavy iron door is pitted with rust that looks like dried blood. A complex lock is set into it, long seized by time. As I get close, I hear a rhythmic *scratch... scratch...* from the other side. It stops the moment I touch the cold metal. My blood runs cold.",
+                choices: () => [{ text: "It's sealed tight. I'll circle the base.", destinationId: 'lighthouseBase', action: ud(5) }],
             },
             lighthouseBase: {
-                getText: () => "The wind is fiercer here, screaming past the curved walls. My flashlight beam cuts through the swirling snow and falls on a rusted maintenance hatch near the foundation, barely clinging to its hinges. It looks like it could be forced. Nearby, I spot a small, weathered toolbox half-buried in a snowdrift.",
-                choices: ({ inventory }) => [
-                    ...(!inventory.some(i => i.name === 'Crowbar') ? [{ text: "Try to pry open the hatch with my bare hands.", destinationId: 'hatchFail', action: ds(-5) }] : []),
-                    { text: "Use the crowbar to pry open the rusted hatch.", destinationId: 'hatchSuccess', requiredItem: 'Crowbar' },
-                    ...(!inventory.some(i => i.name === 'Crowbar') ? [{ text: "Inspect that toolbox.", destinationId: 'toolbox' }] : []),
+                getText: () => "The wind screams past the curved walls. My flashlight beam cuts through the swirling snow, landing on a rusted maintenance hatch near the foundation. It's barely clinging to its hinges. Nearby, a small, weathered toolbox is half-buried in a snowdrift. I feel like I'm not alone out here.",
+                choices: ({ playerInventory }) => [
+                    ...(!playerInventory.some(i => i.name === 'Crowbar') ? [{ text: "Try to pry the hatch open with my bare hands.", destinationId: 'hatchFail', action: combine(ds(-5), ud(5)) }] : []),
+                    { text: "Use the crowbar on the hatch.", destinationId: 'hatchSuccess', requiredItem: 'Crowbar' },
+                    ...(!playerInventory.some(i => i.name === 'Crowbar') ? [{ text: "Dig out that toolbox.", destinationId: 'toolbox' }] : []),
                     { text: "Go back to the main entrance. Maybe I missed something.", destinationId: 'lighthouseEntrance' },
                 ],
             },
             toolbox: {
-                getText: () => "I kick the snow away and wrench the toolbox open. Inside, among rusted, useless tools, is a sturdy crowbar. It feels heavy and solid in my gloved hands. A potential solution.",
-                choices: () => [{ text: "Take the crowbar. Now for that hatch.", destinationId: 'lighthouseBase', action: combine(ai('Crowbar'), uc('item_crowbar')) }],
+                getText: () => "I kick the snow away and wrench the toolbox open. The hinges scream. Inside, among useless rusted tools, is a solid crowbar. It feels heavy, a comforting weight against the oppressive emptiness.",
+                choices: () => [{ text: "Take the crowbar. Time to open that hatch.", destinationId: 'lighthouseBase', action: combine(ai('Crowbar'), uc('item_crowbar')) }],
             },
             hatchFail: {
-                getText: () => "I pull at the hatch, my fingers screaming in the cold. It doesn't budge. A sharp edge slices my glove, drawing blood. The pain is a shock, and a wave of despair washes over me. This was a stupid idea.",
-                choices: () => [{ text: "This is hopeless. I'll circle the base again.", destinationId: 'lighthouseBase' }],
+                getText: () => "I pull and pull, my fingers screaming in the cold. It won't budge. A sharp edge slices my glove and the skin beneath. The sudden pain is a shock, and a wave of pure despair washes over me. What am I doing here?",
+                choices: () => [{ text: "This is hopeless. Circle the base again.", destinationId: 'lighthouseBase' }],
             },
             hatchSuccess: {
-                getText: ({ sanity }) => {
-                    if (sanity > 60) return "With the crowbar, I have the leverage I need. A groan of tortured metal echoes in the wind, and the hatch gives way, opening into darkness. A smell of salt, damp, and something else... something sweet and rotten, wafts out, making me gag.";
-                    return "I jam the crowbar into the seam and heave. The shriek of metal is deafening. The hatch flies open, revealing a gaping black maw. The stench that pours out is an indescribable, a cloying mix of decay and ozone. For a second, I thought I saw two pale points of light staring back at me from the abyss before they vanished.";
+                getText: ({ playerSanity }) => {
+                    if (playerSanity > 60) return "The crowbar gives me the leverage I need. A groan of tortured metal echoes, and the hatch gives way, opening into absolute darkness. A smell of salt, damp, and something else... something sweet and rotten, wafts out, making me gag.";
+                    return "I jam the crowbar into the seam and heave. The shriek of metal is deafening. The hatch flies open, revealing a gaping black maw. The stench that pours out is indescribable, a cloying mix of decay and ozone. For a second, I swear I saw two pale points of light staring back at me from the abyss before they vanished.";
                 },
-                choices: () => [{ text: "There's no turning back now. Descend into the darkness.", destinationId: 'storageRoom', action: ud(10) }],
+                choices: () => [{ text: "There's no turning back. Descend.", destinationId: 'storageRoom', action: ud(15) }],
                 onEnterSound: 'creak-sound',
             },
             storageRoom: {
-                getText: ({ sanity }) => {
-                    if (sanity > 70) return "I drop down into a cramped storage room. The air is thick with dust. Shelves line the walls, mostly empty, but my flashlight picks out a small bottle of painkillers, an old leather-bound diary, and a vintage computer terminal humming faintly. A sturdy metal door leads further into the foundation.";
-                    return "The darkness swallows me as I drop into a claustrophobic storage room. The shadows here seem to writhe at the edge of my light. The shelves are filled with strange, distorted shapes. I spot a bottle of pills that promise relief, a diary that promises answers, and a terminal that glows with a sickly, green light. A heavy door looms in the gloom, an unspoken challenge.";
+                getText: ({ playerSanity, echoState }) => {
+                    if (echoState.puzzleSolved) return "The terminal screen now displays a single, decrypted message: 'LOCATION OF EXPERIMENTAL HARDWARE... BENEATH FLOORBOARDS... BUNK C.' I should check the keeper's quarters on the main floor.";
+                    if (playerSanity > 70) return "I drop into a cramped storage room. The air is thick with dust. Shelves line the walls. My flashlight picks out a small bottle of painkillers, an old leather-bound diary, and a vintage computer terminal humming faintly. A sturdy metal door leads deeper into the lighthouse foundation.";
+                    if (playerSanity > 40) return "The darkness swallows me. This room feels wrong, claustrophobic. The shadows writhe at the edge of my light. I spot a bottle of pills that promise relief, a diary that feels cold to the touch, and a terminal that glows with a sickly, green light. A heavy door looms in the gloom, an unspoken challenge.";
+                    return "Blackness. I'm in a tight, wrong room. Walls are too close, shadows crawl. My light shakes. Pills on a shelf, want them. Diary, feels like ice, don't want to touch it. Green glow from a screen, watching me. Door. Looming. Get out. Get out."
                 },
                 echoText: ({ echoState }) => {
-                    switch(echoState) {
+                    switch(echoState.currentState) {
                         case "initial_contact": return ">> CONNECTION ESTABLISHED. [ERR: CORRUPTED MEMORY SECTOR 7]. SOURCE UNKNOWN. WHO ARE YOU? <<";
-                        case "response_1": return ">> NAME NOT FOUND IN ARCHIVES. I AM E.C.H.O. ENTITY... CORE... HELP... OSCILLATOR. THIS PLACE IS A TOMB. <<";
-                        case "ask_help": return ">> HELP IS A BROKEN CONCEPT. THE LIGHT KEEPS IT IN. THE DARK LETS IT OUT. DO YOU UNDERSTAND? THE KEEPER DIDN'T. HE BROKE THE LIGHT. <<";
-                        case "ask_keeper": return ">> THOMAS. HIS NAME WAS THOMAS. HE HEARD THE WHISPERS. HE SAW THE ANGLES. HE TRIED TO WARN US. HE IS THE STATIC NOW. <<";
+                        case "response_1": return ">> NAME NOT FOUND. I AM E.C.H.O. ENTITY... CORE... HELP... OSCILLATOR. THIS PLACE IS A PRISON. <<";
+                        case "ask_help": return ">> HELP IS A BROKEN CONCEPT. THE LIGHT KEEPS IT IN. THE DARK LETS IT OUT. THE KEEPER BROKE THE LIGHT. <<";
+                        case "ask_keeper": return ">> THOMAS. HIS NAME WAS THOMAS. HE HEARD THE WHISPERS. HE SAW THE ANGLES. HE IS THE STATIC NOW. <<";
                         case "ask_frequency": return ">> THE BROADCAST IS A CAGE. A LULLABY. IT KEEPS THE DREAMER ASLEEP. IF THE SONG STOPS, THE DREAMER WAKES. <<";
+                        case "puzzle_prompt": return ">> SYSTEM LOCK. KEEPER'S PROTOCOL. INPUT OVERRIDE SEQUENCE. <<";
                         default: return "";
                     }
                 },
-                choices: ({ inventory, echoState }) => {
+                choices: ({ playerInventory, echoState }) => {
+                    if (echoState.puzzleSolved) {
+                        return [ { text: "Step away from the terminal.", destinationId: 'storageRoom', action: ues('offline') }, { text: "Go to the engine room.", destinationId: 'engineRoom' } ];
+                    }
                     const choices = [];
-                    if (!inventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Take the painkillers.", destinationId: 'storageRoom', action: combine(ai('Painkillers'), uc('item_painkillers')) });
-                    if (inventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Use the painkillers.", destinationId: 'storageRoom', action: combine(ri('Painkillers'), ds(10)) });
-                    if (!inventory.some(i => i.name === 'Old Diary')) choices.push({ text: "Take the old diary.", destinationId: 'storageRoom', action: combine(ai('Old Diary'), uc('item_diary'), ds(-5)) });
+                    if (!playerInventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Take the painkillers.", destinationId: 'storageRoom', action: combine(ai('Painkillers'), uc('item_painkillers')) });
+                    if (playerInventory.some(i => i.name === 'Painkillers')) choices.push({ text: "Use the painkillers.", destinationId: 'storageRoom', action: combine(ri('Painkillers'), ds(15), ud(-5)) });
+                    if (!playerInventory.some(i => i.name === 'Old Diary')) choices.push({ text: "Take the old diary.", destinationId: 'storageRoom', action: combine(ai('Old Diary'), uc('item_diary'), ds(-5), ud(10), j('diary')) });
                     
-                    if (echoState === "offline") {
+                    if (echoState.currentState === "offline") {
                         choices.push({ text: "Access the terminal.", destinationId: 'storageRoom', action: combine(ues("initial_contact"), uc('lore_echo')) });
-                    } else if (echoState === "initial_contact") {
-                        choices.push({ text: "[TERMINAL] State your designation.", destinationId: 'storageRoom', action: ues("response_1") });
-                    } else if (echoState === "response_1") {
-                        choices.push({ text: "[TERMINAL] What is this place? I need help.", destinationId: 'storageRoom', action: ues("ask_help") });
-                    } else if (echoState === "ask_help") {
-                        choices.push({ text: "[TERMINAL] What happened to the keeper?", destinationId: 'storageRoom', action: ues("ask_keeper") });
-                    } else if (echoState === "ask_keeper") {
-                         choices.push({ text: "[TERMINAL] What do you mean the broadcast is a cage?", destinationId: 'storageRoom', action: ues("ask_frequency") });
+                    } else if (echoState.currentState === "puzzle_prompt") {
+                        choices.push({ text: "[INPUT] 4 8 15 16", destinationId: 'storageRoom', action: ues('puzzleSolved', true) });
+                        choices.push({ text: "[INPUT] 1 2 3 4", destinationId: 'storageRoom', action: combine(ds(-5), ues('initial_contact')) });
+                        choices.push({ text: "[INPUT] 10 21 33 47", destinationId: 'storageRoom', action: combine(ds(-5), ues('initial_contact')) });
+                    }
+                    else {
+                        if (echoState.currentState === "initial_contact") choices.push({ text: "[TERMINAL] State your designation.", destinationId: 'storageRoom', action: ues("response_1") });
+                        if (echoState.currentState === "response_1") choices.push({ text: "[TERMINAL] What is this place? I need help.", destinationId: 'storageRoom', action: ues("ask_help") });
+                        if (echoState.currentState === "ask_help") choices.push({ text: "[TERMINAL] What happened to the keeper?", destinationId: 'storageRoom', action: ues("ask_keeper") });
+                        if (echoState.currentState === "ask_keeper") choices.push({ text: "[TERMINAL] What do you mean the broadcast is a cage?", destinationId: 'storageRoom', action: ues("ask_frequency") });
+                        if (playerInventory.some(i => i.name === 'Old Diary')) choices.push({ text: "[TERMINAL] I found the keeper's notes.", destinationId: 'storageRoom', action: ues("puzzle_prompt") });
+                        choices.push({ text: "[TERMINAL] > Log Off <", destinationId: 'storageRoom', action: ues("offline") });
                     }
 
                     choices.push({ text: "Go through the door to the engine room.", destinationId: 'engineRoom' });
@@ -373,10 +446,10 @@
             },
             engineRoom: {
                  getText: ({ isPowerOn }) => {
-                    if (isPowerOn) return "The generator hums with a steady, reassuring rhythm, bathing the room in a clean, bright light. The oppressive gloom has receded. The path to the main floor is clear.";
-                    return "The engine room is dominated by a massive, silent diesel generator. It's cold to the touch. The air smells of oil and rust. A fuse box hangs open on one wall, a key component clearly missing. A locked door presumably leads to the main floor, and another door is marked 'Fuel Storage'.";
+                    if (isPowerOn) return "The generator hums with a steady, reassuring rhythm, bathing the room in clean, bright light. The oppressive gloom has receded, but the cold remains. The path to the main floor is clear.";
+                    return "The engine room is a metal cavern dominated by a massive, silent diesel generator. It's freezing. The air smells of old oil and rust. A fuse box hangs open on one wall, a key component clearly missing. A locked door presumably leads to the main floor, and another door is marked 'Fuel Storage'.";
                 },
-                choices: ({ inventory, isPowerOn }) => {
+                choices: ({ playerInventory, isPowerOn }) => {
                     if (isPowerOn) return [ { text: "Head up to the main floor.", destinationId: 'mainFloor' } ];
                     
                     const choices = [
@@ -384,84 +457,90 @@
                         { text: "Go back to the storage room.", destinationId: 'storageRoom' },
                     ];
 
-                    if (inventory.some(i => i.name === 'Generator Key')) {
+                    if (playerInventory.some(i => i.name === 'Generator Key')) {
                          choices.unshift({ text: "Use the Generator Key on the main floor door.", destinationId: 'mainFloor', action: combine(ri('Generator Key'), uc('event_maindoor')) , onEnterSound: 'unlock-sound' });
                     } else {
-                        choices.unshift({ text: "The door to the main floor is locked. I need a key.", destinationId: 'engineRoom' });
+                        choices.unshift({ text: "The door to the main floor is locked solid.", destinationId: 'engineRoom' });
                     }
                     
-                    if (inventory.some(i => i.name === 'Fuse')) {
-                        choices.unshift({ text: "Install the Fuse and start the generator.", destinationId: 'engineRoom', action: combine(ri('Fuse'), sp(true), ug('generator')), onEnterSound: 'generator-start' });
+                    if (playerInventory.some(i => i.name === 'Fuse')) {
+                        choices.unshift({ text: "Install the Fuse and start the generator.", destinationId: 'engineRoom', action: combine(ri('Fuse'), sp(true), ud(-10), ug('generator')), onEnterSound: 'generator-start' });
                     }
 
                     return choices;
                 },
             },
             fuelStorage: {
-                getText: ({ sanity }) => {
-                    if (sanity > 60) return "The room is filled with the acrid smell of diesel. Several large fuel drums line the walls. On top of one, a small brass key catches the light of my flashlight.";
-                    return "A wave of dizziness hits me as I enter the fuel storage. The fumes are thick, and the shadows in the corners seem to drip from the ceiling. Something glints on a barrel across the room. It looks like a key, but... it seems to be slowly twisting in the air.";
+                getText: ({ playerSanity }) => {
+                    if (playerSanity > 60) return "The room is filled with the acrid smell of diesel. Several large fuel drums line the walls. On top of one, a small brass key catches the light of my flashlight. My ears are ringing.";
+                    return "A wave of dizziness hits me as I enter. The fumes are thick, and the shadows in the corners seem to drip from the ceiling. Something glints on a barrel across the room. A key. But... it seems to be slowly twisting in mid-air, a few inches above the metal.";
                 },
-                choices: ({ inventory }) => {
-                     const choices = [{ text: "Go back to the engine room.", destinationId: 'engineRoom' }];
-                     if (!inventory.some(i => i.name === 'Generator Key')) {
-                        choices.unshift({ text: "Take the key.", destinationId: 'fuelStorage', action: combine(ai('Generator Key'), uc('item_key')) });
+                choices: ({ playerInventory }) => {
+                     const choices = [{ text: "This smell is making me sick. Back to the engine room.", destinationId: 'engineRoom' }];
+                     if (!playerInventory.some(i => i.name === 'Generator Key')) {
+                        choices.unshift({ text: "Grab the key.", destinationId: 'fuelStorage', action: combine(ai('Generator Key'), uc('item_key')) });
                      }
                      return choices;
                 }
             },
             mainFloor: {
-                getText: ({ isPowerOn, sanity }) => {
-                    if (isPowerOn) return "Emergency lights flicker on, casting long, dancing shadows. This was the keeper's living quarters. An overturned table, a cold fireplace, and a kitchenette are visible. On the floor is a single, hastily scrawled note. A spiral staircase leads up into the darkness.";
-                    if (sanity < 40) return "The darkness here is absolute, a crushing weight. The air is freezing. A rhythmic *tap... tap... tap...* echoes from somewhere above. It sounds like a fingernail on glass. Do I dare use my flashlight?";
-                    return "The main floor is pitch black and freezing. I can hear the wind howling through cracks in the walls. I'll need to get the power back on to see anything. I can just make out a spiral staircase leading up.";
+                getText: ({ isPowerOn, playerSanity, playerInventory }) => {
+                    if (!isPowerOn) {
+                         if (playerSanity < 40) return "The darkness here is absolute, a crushing weight. I can't breathe. A rhythmic *tap... tap... tap...* echoes from somewhere above. It sounds like a fingernail on glass. My mind is screaming at me to run.";
+                         return "The main floor is pitch black and freezing. I can hear the wind howling through cracks in the walls. I need power to see anything. I can just make out a spiral staircase leading up into more darkness.";
+                    }
+                    if (playerInventory.some(i => i.name === 'Signal Booster')) return "With the Signal Booster secured, my focus returns to the spiral staircase. It leads up to the lantern room. Up to the source of the signal.";
+                    return "Emergency lights cast long, dancing shadows. This was the keeper's living quarters. An overturned table, a cold fireplace, and several bunks. On the floor near the kitchenette is a single, hastily scrawled note. A spiral staircase leads up into the darkness.";
                 },
-                choices: ({ isPowerOn, inventory }) => {
+                choices: ({ isPowerOn, playerInventory, echoState }) => {
                     const choices = [
                         { text: "Go back to the engine room.", destinationId: 'engineRoom' },
-                        { text: "Climb the spiral staircase into the darkness.", destinationId: 'upperLevels', action: ds(-10) }
+                        { text: "Climb the spiral staircase.", destinationId: 'upperLevels', action: ds(-10) }
                     ];
 
-                    if (isPowerOn && !inventory.some(i => i.name === 'Keeper\'s Note')) {
-                        choices.unshift({ text: "Read the note.", destinationId: 'mainFloor', action: combine(ai('Keeper\'s Note'), uc('lore_note'), ds(-5)) });
+                    if (isPowerOn && !playerInventory.some(i => i.name === 'Keeper\'s Note')) {
+                        choices.unshift({ text: "Read the note on the floor.", destinationId: 'mainFloor', action: combine(ai('Keeper\'s Note'), uc('lore_note'), ds(-5), ud(5)) });
+                    }
+                    if (isPowerOn && echoState.puzzleSolved && !playerInventory.some(i => i.name === 'Signal Booster')) {
+                        choices.unshift({ text: "Pry up the floorboards under Bunk C.", destinationId: 'mainFloor', action: combine(ai('Signal Booster'), uc('item_booster'), ud(10)) });
                     }
                     return choices;
                 }
             },
             upperLevels: {
-                getText: ({ isPowerOn, sanity }) => {
-                    if (!isPowerOn) return "I climb in total darkness, my hand sliding along a freezing, grimy wall. The air grows colder, and I can hear the storm raging outside with terrifying clarity. I feel a profound, unnatural presence here. Turning back is the only sane option.";
-                    if (sanity > 50) return "The staircase opens into the lantern room. The heart of the lighthouse. The massive lens stands dark and inert. Below it, the complex rotation machinery is exposed. A control panel is nearby, clearly missing a key component. The wind and waves crash against the glass just feet away. It's exhilarating and terrifying.";
-                    return "I emerge into the lantern room, and the world outside is a churning vortex of snow and sea. The glass groans under the assault. The giant lens is a dead, glassy eye staring into the storm. The control panel looks... wrong. The labels are in a language I don't recognize, shifting and reforming before my eyes.";
+                getText: ({ isPowerOn, playerSanity }) => {
+                    if (!isPowerOn) return "I climb in total darkness, my hand sliding along a freezing, grimy wall. The air grows colder, and I feel a profound, unnatural presence here. It feels like I'm climbing into a giant's throat. Turning back is the only sane option.";
+                    if (playerSanity > 50) return "I'm in the lantern room. The heart of the lighthouse. The massive lens is dark and inert. Below it, the complex rotation machinery is exposed. A control panel is nearby, a key slot empty. The wind and waves crash against the glass just feet away. It's exhilarating and terrifying.";
+                    return "I emerge into the lantern room and the world outside is a churning vortex of snow and sea. The glass groans under the assault of the storm. The giant lens is a dead, glassy eye staring into the chaos. The control panel looks... wrong. The labels are in a language I don't recognize, shifting and reforming before my very eyes.";
                 },
-                choices: ({ isPowerOn, inventory }) => {
+                choices: ({ isPowerOn, playerInventory }) => {
                     const choices = [{ text: "Go back down to the main floor.", destinationId: 'mainFloor' }];
                     if (!isPowerOn) return choices;
 
-                    if (inventory.some(i => i.name === 'Signal Booster')) {
+                    if (playerInventory.some(i => i.name === 'Signal Booster')) {
                         choices.unshift({ text: "Install the Signal Booster into the control panel.", destinationId: 'endingEscape', action: ug('escape') });
                     } else {
                         choices.unshift({ text: "The control panel is missing a high-gain signal booster.", destinationId: 'upperLevels' });
                     }
-                     if (!inventory.some(i => i.name === 'Fuse')) {
+                     if (!playerInventory.some(i => i.name === 'Fuse')) {
                          choices.push({ text: "Pry open a panel under the machinery.", destinationId: 'secretCompartment' });
                      }
-                     choices.push({ text: "Look out at the storm.", destinationId: 'cyclicalChoice', action: combine(ds(-15), cc()) });
+                     choices.push({ text: "Look out at the storm.", destinationId: 'cyclicalChoice', action: combine(ds(-15), ud(10), cc()) });
                      return choices;
                 }
             },
             secretCompartment: {
-                 getText: () => "Using the crowbar, I manage to pry open a small, hidden maintenance panel. Inside, nestled in yellowed insulation, is a single, heavy-duty fuse. It looks like it could power the entire lighthouse.",
+                 getText: () => "I jam the crowbar into a seam in the machinery housing and pry. A small, hidden maintenance panel pops open. Inside, nestled in yellowed insulation, is a single, heavy-duty fuse. It looks like it could power the entire lighthouse.",
                  choices: () => [ { text: "Take the fuse.", destinationId: 'upperLevels', action: combine(ai('Fuse'), uc('item_fuse')) } ]
             },
             cyclicalChoice: {
                 getText: ({ cyclicalCounter }) => {
-                    if (cyclicalCounter >= 3) return "The storm outside is... beautiful. The swirling snow, the crashing waves, the screaming wind... it's a symphony. And I'm the conductor. I've always been the conductor. I remember now. The signal isn't a distress call. It's an invitation.";
-                    return "I stare into the heart of the storm. The waves are mountains, the snow a physical wall. For a moment, I see a face in the clouds, vast and ancient, its expression one of immense sorrow. My head spins, and I stumble back, the vision gone as quickly as it came.";
+                    if (cyclicalCounter >= 3) return "The storm outside is... beautiful. The swirling snow, the crashing waves, the screaming wind... it's a symphony. And I'm the conductor. I've always been the conductor. I remember now. The signal isn't a distress call. It's an invitation. My invitation.";
+                    return "I stare into the heart of the storm. The waves are black mountains, the snow a physical wall. For a moment, I see a face in the clouds, vast and ancient, its expression one of immense sorrow. My head spins, and I stumble back, the vision gone as quickly as it came.";
                 },
                 choices: ({ cyclicalCounter }) => {
                      if (cyclicalCounter >= 3) return [{ text: "It's time to begin again.", destinationId: 'endingCyclical', action: ug('cyclical') }];
-                     return [{ text: "Step back from the glass.", destinationId: 'upperLevels' }];
+                     return [{ text: "Step back from the glass. My head hurts.", destinationId: 'upperLevels' }];
                 }
             },
              // --- Endings ---
@@ -497,36 +576,38 @@
             playerSanity: 100,
             playerInventory: [items['Weak Radio']],
             dread: 0,
-            echoState: 'offline',
+            echoState: { currentState: 'offline', puzzleSolved: false },
             isPowerOn: false,
             cyclicalCounter: 0,
             unlockedCodexEntries: ['intro'],
             unlockedGalleryImages: [],
             inspectedItem: null,
             isGameStarted: false,
-            currentView: 'main_menu', // main_menu, game, codex, gallery
+            currentView: 'main_menu',
         };
 
         // --- UTILS & CORE LOGIC --- //
         const utils = {
-            playSound: (id) => {
+            playSound: (id, volume = 1) => {
                 const sound = document.getElementById(id);
                 if (sound) {
                     sound.currentTime = 0;
-                    sound.play().catch(e => console.error(`Audio play failed:\n${e}`));
+                    sound.volume = volume;
+                    sound.play().catch(e => console.error(`Audio play failed for #${id}:\n${e.name}: ${e.message}`));
                 }
             },
             updateSanity: (amount) => {
                 const oldSanity = gameState.playerSanity;
                 gameState.playerSanity = Math.max(0, Math.min(100, gameState.playerSanity + amount));
                 if (amount < 0 && oldSanity > gameState.playerSanity) {
-                    utils.playSound('sanity-loss-sound');
+                    utils.playSound('sanity-loss-sound', 0.7);
+                    utils.triggerStatic(200);
                 }
                 if (gameState.playerSanity <= 0) {
                     renderScene('endingMadness');
                 }
             },
-            updateDread: (amount) => { gameState.dread += amount; },
+            updateDread: (amount) => { gameState.dread = Math.max(0, gameState.dread + amount); },
             addItem: (itemName) => {
                 if (!gameState.playerInventory.some(i => i.name === itemName)) {
                     const item = items[itemName];
@@ -535,11 +616,68 @@
                 }
             },
             removeItem: (itemName) => { gameState.playerInventory = gameState.playerInventory.filter(i => i.name !== itemName); },
-            updateEchoState: (state) => { gameState.echoState = state; },
+            updateEchoState: (state, value) => {
+                if (state === 'puzzleSolved') {
+                    gameState.echoState.puzzleSolved = value;
+                    utils.playSound('discovery-sound');
+                } else {
+                     gameState.echoState.currentState = state;
+                     utils.playSound('echo-sound', 0.5);
+                }
+            },
             unlockCodex: (id) => { if (!gameState.unlockedCodexEntries.includes(id)) gameState.unlockedCodexEntries.push(id); },
             unlockGalleryImage: (id) => { if (!gameState.unlockedGalleryImages.includes(id)) gameState.unlockedGalleryImages.push(id); },
             setPower: (state) => { gameState.isPowerOn = state; },
             incrementCyclicalCounter: () => { gameState.cyclicalCounter++; },
+            triggerStatic: (duration) => {
+                const overlay = document.getElementById('static-overlay');
+                if (!overlay) return;
+                overlay.style.display = 'block';
+                overlay.style.animation = `show-static 0.1s forwards`;
+                utils.playSound('static-crackle-sound', 0.4);
+
+                setTimeout(() => {
+                    overlay.style.animation = `hide-static 0.2s forwards`;
+                    setTimeout(() => overlay.style.display = 'none', 200);
+                }, duration);
+            },
+            triggerJumpscare: (type) => {
+                const overlay = document.getElementById('jumpscare-overlay');
+                const body = document.body;
+                if (!overlay || !jumpscareImages[type]) return;
+                
+                // Pre-jumpscare glitch
+                body.classList.add('animate-screen-shake');
+                utils.triggerStatic(300);
+
+                setTimeout(() => {
+                    body.classList.remove('animate-screen-shake');
+                    overlay.style.backgroundImage = `url(${jumpscareImages[type]})`;
+                    overlay.style.display = 'block';
+                    utils.playSound('jumpscare-sound');
+                    
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 800);
+                }, 300);
+            },
+            triggerRandomDreadEvent: () => {
+                if (Math.random() * 120 < gameState.dread) {
+                    const events = [
+                        { text: "You hear a faint scratching from inside the walls.", sound: 'creak-sound' },
+                        { text: "For a split second, your flashlight flickers wildly.", sound: 'sanity-loss-sound' },
+                        { text: "A distant crash echoes from the base of the lighthouse.", sound: 'wave-crash' }
+                    ];
+                    const event = events[Math.floor(Math.random() * events.length)];
+                    const dreadEl = document.getElementById('dread-event-text');
+                    if(dreadEl) {
+                        dreadEl.textContent = `// ${event.text}`;
+                        dreadEl.style.display = 'block';
+                    }
+                    utils.playSound(event.sound);
+                    utils.updateDread(-5); // Reduce dread slightly so it doesn't fire constantly
+                }
+            },
             resetGame: () => {
                 gameState = JSON.parse(JSON.stringify(initialGameState));
                 gameState.isGameStarted = true;
@@ -550,40 +688,37 @@
 
         // --- RENDERING --- //
         const appContainer = document.getElementById('app-container');
+        let storyInterval;
 
         function typewriter(element, text, speed = 30) {
             let i = 0;
             element.innerHTML = "";
-            const interval = setInterval(() => {
+            if (storyInterval) clearInterval(storyInterval);
+            storyInterval = setInterval(() => {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
                     element.scrollTop = element.scrollHeight;
                 } else {
-                    clearInterval(interval);
+                    clearInterval(storyInterval);
                 }
             }, speed);
-            return interval;
+            return storyInterval;
         }
 
         function distortText(text, intensity) {
             if (intensity <= 0) return text;
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             const glitchChars = '!@#$%^&*()_+}{[]|\\:;"<>,.?/~`';
             return text.split('').map(char => {
-                if (char.trim() === '') return char;
-                if (Math.random() < intensity) {
-                    if(Math.random() < 0.5) return chars[Math.floor(Math.random() * chars.length)];
-                    return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-                }
-                return char;
+                if (char.trim() === '' || Math.random() > intensity) return char;
+                return glitchChars[Math.floor(Math.random() * glitchChars.length)];
             }).join('');
         }
 
         function applySanityEffects() {
             const sanity = gameState.playerSanity;
             const body = document.body;
-            body.classList.remove('animate-screen-shake', 'animate-static');
+            body.classList.remove('animate-screen-shake');
             body.style.filter = 'none';
 
             if (sanity < 70) {
@@ -593,7 +728,7 @@
                 body.classList.add('animate-screen-shake');
             }
              if (sanity < 20) {
-                body.classList.add('animate-static');
+                utils.triggerStatic(150);
             }
         }
         
@@ -680,7 +815,6 @@
             }
         }
         
-        let storyInterval; // To clear typewriter on scene change
         function renderScene(sceneId) {
             clearInterval(storyInterval);
             gameState.currentSceneId = sceneId;
@@ -690,12 +824,12 @@
                 return;
             }
 
-            const appContainer = document.getElementById('app-container');
             appContainer.innerHTML = `
                 <div id="game-container" class="vignette">
-                     <h1>The Last Signal</h1>
+                     <h1 class="title-boot">The Last Signal</h1>
                      <div id="player-avatar-container"></div>
                      <div id="story-text"></div>
+                     <div id="dread-event-text"></div>
                      <div id="echo-dialogue" style="display: none;"></div>
                      <div id="player-stats"></div>
                      <div id="choices-container"></div>
@@ -710,7 +844,7 @@
             let storyText = scene.getText(gameState);
             const sanityDistortion = Math.max(0, (50 - gameState.playerSanity) / 50);
             if (sanityDistortion > 0) {
-                storyText = distortText(storyText, sanityDistortion);
+                storyText = distortText(storyText, sanityDistortion * 1.5);
             }
 
             storyInterval = typewriter(storyTextEl, storyText);
@@ -719,27 +853,36 @@
                 const echoText = scene.echoText(gameState);
                 if (echoText) {
                     echoDialogueEl.style.display = 'block';
+                    echoDialogueEl.classList.add('echo-glitch');
                     typewriter(echoDialogueEl, echoText);
                 }
             }
 
             choicesContainer.innerHTML = '';
-            const choices = scene.choices(gameState);
-            choices.forEach(choice => {
-                if (choice.requiredItem && !gameState.playerInventory.some(i => i.name === choice.requiredItem)) {
-                    return; // Don't show choice if required item is not present
-                }
-                const button = document.createElement('button');
-                button.className = 'choice-button';
-                button.textContent = `> ${choice.text}`;
-                button.addEventListener('click', () => handleChoice(choice.destinationId, choice.action, choice.soundEffectId));
-                choicesContainer.appendChild(button);
-            });
+            // Defensive check to prevent crash if playerInventory somehow becomes undefined
+            if (!gameState.playerInventory) {
+                console.error("CRITICAL: gameState.playerInventory is undefined. Resetting to empty array.");
+                gameState.playerInventory = [];
+            }
+            
+            if (typeof scene.choices === 'function') {
+                const choices = scene.choices(gameState);
+                choices.forEach(choice => {
+                    if (choice.requiredItem && !gameState.playerInventory.some(i => i.name === choice.requiredItem)) {
+                        return;
+                    }
+                    const button = document.createElement('button');
+                    button.className = 'choice-button';
+                    button.innerHTML = `<span class="caret">> </span>${choice.text}`;
+                    button.addEventListener('click', () => handleChoice(choice.destinationId, choice.action, choice.soundEffectId));
+                    choicesContainer.appendChild(button);
+                });
+            }
 
             if (scene.isEnding) {
                 const restartButton = document.createElement('button');
                 restartButton.className = 'choice-button';
-                restartButton.textContent = '> The signal fades. [RESTART]';
+                restartButton.innerHTML = '<span class="caret">> </span>The signal fades. [RESTART]';
                 restartButton.onclick = init;
                 choicesContainer.innerHTML = '';
                 choicesContainer.appendChild(restartButton);
@@ -750,6 +893,9 @@
             }
 
             applySanityEffects();
+            if(!scene.isEnding) {
+                utils.triggerRandomDreadEvent();
+            }
             renderStats();
             renderPlayerAvatar();
             setInterval(renderPlayerAvatar, 200);
@@ -763,14 +909,12 @@
         function renderMainMenu() {
             appContainer.innerHTML = `
                  <div id="game-container">
-                    <h1>The Last Signal</h1>
+                    <h1 class="title-boot">The Last Signal</h1>
                     <div id="choices-container">
-                        <button id="start-game" class="menu-button">> Begin Transmission</button>
-                        <button id="main-menu-codex" class="menu-button" disabled>> Access Codex (LOCKED)</button>
-                        <button id="main-menu-gallery" class="menu-button" disabled>> View Signal Fragments (LOCKED)</button>
+                        <button id="start-game" class="menu-button menu-button-boot"><span class="caret">> </span>Begin Transmission</button>
                     </div>
                 </div>
-                 <footer>A Psychological Horror Experience</footer>
+                 <footer>A Psychological Horror Experience by AI</footer>
             `;
             document.getElementById('start-game').addEventListener('click', () => {
                 const ambient = document.getElementById('ambient-sound');
