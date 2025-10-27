@@ -34,7 +34,7 @@ const ChoicesContainer: React.FC<{choices: Choice[], onChoiceSelect: (choice: Ch
                 <button
                     key={index}
                     onClick={() => onChoiceSelect(choice)}
-                    className="p-3 text-lg text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white transition-colors duration-200"
+                    className="p-3 text-lg text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white hover:border-amber-400 hover:scale-[1.02] origin-center transition-all duration-200"
                 >
                    > {getChoiceText(choice)}
                 </button>

@@ -26,7 +26,7 @@ const Gallery: React.FC<GalleryProps> = ({ unlockedIds, onBack }) => {
                  </div>
                 <button
                     onClick={() => setSelectedItem(null)}
-                    className="p-3 mt-8 text-lg text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white transition-colors duration-200 w-full max-w-xs"
+                    className="p-3 mt-8 text-lg text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white hover:border-amber-400 hover:scale-[1.02] origin-center transition-all duration-200 w-full max-w-xs"
                 >
                     > [ Back to Gallery ]
                 </button>
@@ -57,7 +57,7 @@ const Gallery: React.FC<GalleryProps> = ({ unlockedIds, onBack }) => {
             </div>
             <button
                 onClick={onBack}
-                className="p-3 mt-4 text-2xl text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white transition-colors duration-200 w-full max-w-xs"
+                className="p-3 mt-4 text-2xl text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white hover:border-amber-400 hover:scale-[1.02] origin-center transition-all duration-200 w-full max-w-xs"
             >
                 > [ Return to Menu ]
             </button>

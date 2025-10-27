@@ -10,7 +10,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onStart, onNavigate }) => {
     const MenuButton: React.FC<{onClick: () => void, children: React.ReactNode}> = ({ onClick, children }) => (
          <button
             onClick={onClick}
-            className="p-3 mt-4 text-2xl text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white transition-colors duration-200 w-full max-w-xs"
+            className="p-3 mt-4 text-2xl text-left text-amber-400 border border-amber-400/50 bg-black/50 hover:bg-amber-400/10 hover:text-white hover:border-amber-400 hover:scale-[1.02] origin-center transition-all duration-200 w-full max-w-xs"
         >
             {children}
         </button>

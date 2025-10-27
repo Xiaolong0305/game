@@ -1,7 +1,7 @@
 import { CodexEntry } from '../types';
 import { items } from './items';
 
-export const codexData: Record<string, CodexEntry> = {
+export const getCodexData = (): Record<string, CodexEntry> => ({
     'item_radio': { id: 'item_radio', title: 'Weak Radio', content: items['Weak Radio'].description },
     'item_crowbar': { id: 'item_crowbar', title: 'Crowbar', content: items['Crowbar'].description },
     'item_painkillers': { id: 'item_painkillers', title: 'Painkillers', content: items['Painkillers'].description },
@@ -20,4 +20,4 @@ export const codexData: Record<string, CodexEntry> = {
     'echo_tomb': { id: 'echo_tomb', title: 'ECHO: The Tomb', content: ">> THIS PLACE IS A TOMB. <<"},
     'echo_keeper': { id: 'echo_keeper', title: 'ECHO: The Keeper', content: ">> THOMAS. HIS NAME WAS THOMAS. HE HEARD THE WHISPERS. HE SAW THE ANGLES. HE TRIED TO WARN US. HE IS THE STATIC NOW. <<"},
     'echo_frequency': { id: 'echo_frequency', title: 'ECHO: The Frequency', content: ">> THE BROADCAST IS A CAGE. A LULLABY. IT KEEPS THE DREAMER ASLEEP. IF THE SONG STOPS, THE DREAMER WAKES. <<"},
-};
+});
